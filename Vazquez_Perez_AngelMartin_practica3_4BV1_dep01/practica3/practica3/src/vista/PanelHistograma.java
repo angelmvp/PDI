@@ -16,6 +16,7 @@ public class PanelHistograma extends JPanel{
         this.color = color;
         this.datosDouble = null;
         repaint();
+        initcomponents();
     }
     
     public PanelHistograma(double[] datosDouble, Color color){
@@ -23,16 +24,27 @@ public class PanelHistograma extends JPanel{
         this.color = color;
         this.datosInt = null; 
         repaint();
+        initcomponents();
     }
-
+    public void initcomponents(){
+        this.setSize(255,255);
+    }
+    public PanelHistograma(PanelHistograma panel) {
+        if (panel.datosDouble != null) {
+            this.datosDouble = panel.datosDouble.clone();
+        }
+        if (panel.datosInt != null) {
+            this.datosInt = panel.datosInt.clone(); 
+        }
+        this.color = panel.color;
+        panel.repaint();
+    }
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         int width = getWidth();
         int height = getHeight();
-        System.out.println(height);
-        System.out.println(width);
         if (datosDouble != null) {
             longitud = datosDouble.length;
             int anchoBarra = Math.max(1, width / longitud);
@@ -46,7 +58,7 @@ public class PanelHistograma extends JPanel{
             int anchoBarra = 1;
             g2d.setColor(color);
             for (int i = 0; i < longitud; i++) {
-                int alturaBarra = (int) ((double) datosInt[i] / 255 * height); // Escalar para normalizar entre 0 y 1
+                int alturaBarra = (int) ((double) datosInt[i] / 255 * height);
                 g2d.fillRect(i * anchoBarra, height - alturaBarra, anchoBarra, alturaBarra);
             }
         }
@@ -56,13 +68,13 @@ public class PanelHistograma extends JPanel{
         this.datosDouble = nuevosDatos;
         this.datosInt = null;
         this.color = color;
-        repaint();
+        this.repaint();
     }
 
     public void setDatos(int[] nuevosDatos, Color color){
         this.datosInt = nuevosDatos;
         this.datosDouble = null;
         this.color = color;
-        repaint();
+        this.repaint();
     }
 }

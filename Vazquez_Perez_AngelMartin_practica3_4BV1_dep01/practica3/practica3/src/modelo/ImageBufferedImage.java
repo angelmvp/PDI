@@ -314,7 +314,7 @@ public int[][] getMatrizImagen(BufferedImage input, int opcion) {
                     break;
                 case 5: 
                     int gris = (rojo + verde + azul) / 3;
-                    valorPixel = (gris << 16) | (gris << 8) | gris;  
+                    valorPixel = gris;  
                     break;
                 default:
                     valorPixel = pixel; 

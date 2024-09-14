@@ -187,10 +187,23 @@ public class Histograma {
     public int getL() {
         return L;
     }
-        public void imprimirArreglo(int[] datos){
-        for(int x=0; x<datos.length; x++){
-                System.out.println(datos[x]);
-            }
+    public void setNuevaMatriz(int [][] nuevaMatriz){
+        this.imagenInt=nuevaMatriz;
+        reiniciar();
+        ejecutarTodo();
+    }
+    public void reiniciar(){
+    for (int i = 0; i < L; i++) {
+        hi[i] = 0;
+        hiac[i] = 0;
+        pi[i] = 0.0;
+        piac[i] = 0.0;
+    }
+    media = 0.0;
+    varianza = 0.0;
+    asimetria = 0.0;
+    energia = 0.0;
+    entropia = 0.0;
     }
 }
 

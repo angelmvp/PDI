@@ -19,7 +19,7 @@ import javax.swing.JScrollPane;
  */
 public class FrameHistograma extends JFrame{
     private PanelHistograma panelHistograma;
-    private Color color;
+    private Color color;    
     public FrameHistograma(){
         initcomponents();
     }

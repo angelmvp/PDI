@@ -50,7 +50,7 @@ public class FrameCompleto extends JFrame{
     private void initComponents() {
         seleccionarImagen();
         buffered = new ImageBufferedImage();
-        img=buffered.getImage(imagen, 5);
+        img=buffered.getImage(imagen,4 );
         //imagen= buffered.getBufferedImage(img);
         panelImagenHistograma= new PanelImagenHistograma(img);
         JPanel contenedor= new JPanel();
@@ -61,7 +61,7 @@ public class FrameCompleto extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 seleccionarImagen();
-                Image nuevaImagen = buffered.getImage(imagen,5);
+                Image nuevaImagen = buffered.getImage(imagen,4);
                 panelImagenHistograma.setImagen(nuevaImagen);
                 }
             });

@@ -20,12 +20,10 @@ import modelo.Histograma;
 public class FrameImagenHistograma extends JFrame {
     private PanelImagen panelImagen;
     private Image img;
-    private PanelHistograma panelHistograma;
+    private final PanelHistograma panelHistograma;
     public FrameImagenHistograma(Image img,PanelHistograma panelHistograma){
         this.img=img;
         this.panelHistograma=panelHistograma;
-        int ancho = img.getWidth(null);
-        int alto = img.getHeight(null);
         setTitle("Visor de imagen y frame");
         initComponents(img);
     }

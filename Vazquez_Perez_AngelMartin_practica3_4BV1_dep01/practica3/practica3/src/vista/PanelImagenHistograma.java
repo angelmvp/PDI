@@ -7,6 +7,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Label;
@@ -43,12 +44,11 @@ public class PanelImagenHistograma extends JPanel {
     }
     public void initcomponents(){
         bufferedImage = new ImageBufferedImage();
-        imagen=bufferedImage.getBufferedImage(img);
-        imagenInt= bufferedImage.getMatrizImagen(imagen,1);
+        imagen=bufferedImage.getBufferedImageColor(img);
+        imagenInt= bufferedImage.getMatrizImagen(imagen,5);
         histograma= new Histograma(imagenInt);
         histograma.ejecutarTodo();
-        System.out.println(histograma.toString());
-        panelImagen = new PanelImagen(imagen);
+        panelImagen = new PanelImagen(img);
         panelHistograma= new PanelHistograma(histograma.getPi(),Color.GRAY);
         this.setLayout(new BorderLayout());
         botonGenerar= new JButton("Generar Histograma");
@@ -68,10 +68,11 @@ public class PanelImagenHistograma extends JPanel {
         panelTop.add(tipoImagen);
         panelTop.add(tipoHistograma);
         panelTop.add(botonGenerar);
+        JPanel panelCentro = new JPanel(new GridLayout(1,2));
+        panelCentro.add(panelImagen,BorderLayout.WEST);
+        panelCentro.add(panelHistograma,BorderLayout.CENTER);
         this.add(panelTop,BorderLayout.NORTH);
-        this.add(panelImagen,BorderLayout.CENTER);
-        this.add(panelHistograma,BorderLayout.EAST);
-        
+        this.add(panelCentro,BorderLayout.CENTER);
 
             botonGenerar.addActionListener(new ActionListener(){
             @Override
@@ -92,15 +93,12 @@ public class PanelImagenHistograma extends JPanel {
                 actualizarImagen();
             }
             });
-        
-        //panel.add(histograma,BorderLayout.CENTER);
     }
     public void setImagen(Image img) {
         this.img = img;
         panelImagen.setImagen(img);
-        imagen=bufferedImage.getBufferedImage(img);
-        actualizarImagen();
-        actualizarHistograma();                      
+        imagen=bufferedImage.getBufferedImageColor(img);
+        actualizarImagen();                    
     }
     public int obtenerCanal(String opcion ){
         int canal=5;
@@ -124,13 +122,11 @@ public class PanelImagenHistograma extends JPanel {
     }
     public void actualizarImagen(){
         int canal= obtenerCanal((String) tipoImagen.getSelectedItem());
-        img=bufferedImage.getImage(imagen, canal);
-        //imagen=bufferedImage.getBufferedImage(img);
-        panelImagen.setImagen(img);
+        imagenInt=bufferedImage.getMatrizImagen(imagen, canal);
+        histograma.setNuevaMatriz(imagenInt);
         actualizarHistograma();
     }
     public void actualizarHistograma(){
-        System.out.println("seleccionandohistograma");
         String seleccion = (String) tipoHistograma.getSelectedItem();
         double[] nuevosDatos = null;
         int [] nuevosDatosint =null;
@@ -156,17 +152,21 @@ public class PanelImagenHistograma extends JPanel {
         }
     }
     public void generarFrame(){
-       FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,panelHistograma);
+       PanelHistograma nuevoPanel = new PanelHistograma(this.panelHistograma);
+       FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,nuevoPanel);
     }
     public void imprimirArreglo(int[] datos){
-        for(int x=0; x<datos.length; x++){
+            for(int x=0; x<200; x++){
                 System.out.println(datos[x]);
             }
     }
     public void imprimir(){
-        for(int y=0; y<imagen.getHeight();y++){
+         for(int y=0; y<imagen.getHeight();y++){
             for(int x=0; x<imagen.getWidth(); x++){
+                if(imagenInt[y][x]>253){
                 System.out.println(imagenInt[y][x]);
+            }
+                
             }
         }
     }
