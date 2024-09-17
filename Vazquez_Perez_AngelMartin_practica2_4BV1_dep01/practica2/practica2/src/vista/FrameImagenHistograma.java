@@ -24,7 +24,7 @@ public class FrameImagenHistograma extends JFrame {
     public FrameImagenHistograma(Image img,PanelHistograma panelHistograma){
         this.img=img;
         this.panelHistograma=panelHistograma;
-        setTitle("Visor de imagen y frame");
+        setTitle("Visor de imagen y frame de color " + panelHistograma.getColor());
         initComponents(img);
     }
     private void initComponents(Image imagen) {

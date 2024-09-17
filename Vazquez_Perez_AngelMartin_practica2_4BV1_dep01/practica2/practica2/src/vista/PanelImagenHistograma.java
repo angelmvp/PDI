@@ -26,6 +26,7 @@ import modelo.ImageBufferedImage;
  *
  * @author jhona
  */
+
 public class PanelImagenHistograma extends JPanel {
     private int [][] imagenInt;
     private JButton botonGenerar;

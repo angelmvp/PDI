@@ -28,7 +28,7 @@ public class FrameHistograma extends JFrame{
         for (int i = 0; i < probabilidades.length; i++) {
             probabilidades[i] = (Math.random()); 
         }
-        panelHistograma= new PanelHistograma(probabilidades,Color.RED);
+        panelHistograma= new PanelHistograma(probabilidades,color);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.add(panelHistograma);
         this.setSize(500,500);

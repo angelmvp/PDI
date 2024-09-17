@@ -77,4 +77,7 @@ public class PanelHistograma extends JPanel{
         this.color = color;
         this.repaint();
     }
+    public String getColor(){
+        return color.toString() ;
+    }
 }
