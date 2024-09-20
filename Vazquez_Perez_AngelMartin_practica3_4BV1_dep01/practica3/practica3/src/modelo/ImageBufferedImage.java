@@ -1,4 +1,4 @@
-package modelo;
+    package modelo;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -75,10 +75,19 @@ public class ImageBufferedImage {
                         break;
                     case 5:
                         int gris = (rojo + verde + azul) / 3;
-                        
                         color = new Color(gris, gris, gris);
                         break;
-                    }
+                    case 6:
+                        color=new Color(rojo,rojo,rojo);
+                        break;
+                    case 7:
+                        color=new Color(verde,verde,verde);
+                        break;
+                    case 8:
+                        color=new Color(azul,azul,azul);
+                        break; 
+                       
+                }
                 imagenInt[y][x] = color.getRGB();
                 matrizImagen[y][x]=color.getRGB();
                 }
@@ -208,6 +217,8 @@ public class ImageBufferedImage {
         for(int y=0; y<alto; y++) {
             for(int x=0; x<ancho; x++) {
                 int pixel = matrizImagen[y][x];
+                int rojo  = (pixel & 0x00ff0000) >> 16;
+                int verde = (pixel & 0x0000ff00) >>  8;
                 int azul  =  pixel & 0x000000ff;
                 Color color = new Color(azul, azul, azul);
                 pixel = color.getRGB();
@@ -282,6 +293,7 @@ public class ImageBufferedImage {
     public int[][] getMatrizImagen() {
         return matrizImagen;
     }
+    
 public int[][] getMatrizImagen(BufferedImage input, int opcion) {
     int alto = input.getHeight();
     int ancho = input.getWidth();

@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,14 +32,13 @@ import modelo.LectorDeImagen;
  * @author jhona
  */
 public class FrameCompleto extends JFrame{
-    private PanelImagen panelImagen;
-    private PanelCanales panelCanales;
-    private PanelImagenHistograma panelImagenHistograma;
+    private PanelConversor panelConversor;
     private BufferedImage imagen;
     private Image img;
     private ImageBufferedImage buffered;
+    private JComboBox<String> comboConversion;
     public FrameCompleto() {
-        super("Practica 2");        
+        super("Practica 3");        
         initComponents();
       addWindowListener(new WindowAdapter() {
             @Override
@@ -51,8 +51,7 @@ public class FrameCompleto extends JFrame{
         seleccionarImagen();
         buffered = new ImageBufferedImage();
         img=buffered.getImage(imagen,4 );
-        //imagen= buffered.getBufferedImage(img);
-        panelImagenHistograma= new PanelImagenHistograma(img);
+        panelConversor= new PanelConversor(img);
         JPanel contenedor= new JPanel();
         contenedor.setLayout(new BorderLayout());
         
@@ -62,12 +61,11 @@ public class FrameCompleto extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 seleccionarImagen();
                 Image nuevaImagen = buffered.getImage(imagen,4);
-                panelImagenHistograma.setImagen(nuevaImagen);
+                panelConversor.setImagen(nuevaImagen);
                 }
             });
-//
+        contenedor.add(panelConversor,BorderLayout.CENTER);
         contenedor.add(botonCargar, BorderLayout.NORTH);
-        contenedor.add(panelImagenHistograma, BorderLayout.CENTER);
         setContentPane(contenedor);
         setSize(500, 500);
         setLocation(222, 222);

@@ -108,19 +108,19 @@
             <url>src/modelo/ImageBufferedImage.java</url>
             <bookmark id="1">
                 <name/>
-                <line>81</line>
+                <line>90</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/modelo/Histograma.java</file>
-            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/vista/FrameCompleto.java</file>
-            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/modelo/ImageBufferedImage.java</file>
+            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/modelo/RGBtoCMY.java</file>
+            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/vista/PanelConversor.java</file>
+            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/modelo/RGBtoYIQ.java</file>
             <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/practica3/Practica3.java</file>
-            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/vista/PanelImagenHistograma.java</file>
-            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/vista/PanelHistograma.java</file>
+            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/modelo/ConversorRGB.java</file>
+            <file>file:/C:/Users/jhona/Desktop/ESCOM_4/PDI/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/src/modelo/RGBtoLAB.java</file>
         </group>
     </open-files>
 </project-private>

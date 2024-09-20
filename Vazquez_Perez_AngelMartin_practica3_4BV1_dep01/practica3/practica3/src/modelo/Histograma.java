@@ -15,7 +15,7 @@ public class Histograma {
     private int [] hiac;
     private double [] pi;
     private double [] piac;
-    private final int L = 255;
+    private final int L = 256;
     private double media;
     private double varianza;
     private double asimetria;
