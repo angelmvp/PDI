@@ -56,7 +56,7 @@ public class PanelCanales extends JPanel {
         
         JButton botonSubmit = new JButton("Generar Frame");
         botonSubmit.addActionListener(new generarFrame());
-        img=imagen.getImage(buffered,5);
+        img=imagen.getImage(buffered,4);
         panelImagen = new PanelImagen(img);
         add(panelImagen, BorderLayout.CENTER);
         add(panelTop, BorderLayout.NORTH);
@@ -65,13 +65,13 @@ public class PanelCanales extends JPanel {
         c.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                actualizarImagenColor();
+                cambiarPanelImagen();
             }
         });
         checkBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                actualizarImagenGrises();
+                cambiarPanelImagen();
             }
         });
     }
@@ -99,18 +99,40 @@ public class PanelCanales extends JPanel {
             String opcion = (String) c.getSelectedItem();
             Image img;
             int canal = obtenerValor(opcion);
-            img = imagen.getImage(buffered, canal);
+            img = actualizarImagenGrises();
             FrameImagen frame = new FrameImagen(img);
         }
     }
-    public void actualizarImagenColor(){
+    public void cambiarPanelImagen(){
+        Image nuevaImagen=actualizarImagenGrises();
+        panelImagen.setImagen(nuevaImagen);
+    }
+    
+    public Image actualizarImagenColor(){
         String opcion = (String) c.getSelectedItem();
         int canal = obtenerValor(opcion);
         img = imagen.getImage(buffered, canal);
-
-        panelImagen.setImagen(img);
+        return img;
     }
-    public void actualizarImagenGrises() {
+    public Image actualizarImagenGrises() {
+        actualizarImagenColor();
+
+        if(checkBox.isSelected()){
+        String opcion = (String) c.getSelectedItem();
+        int opcionGris=obtenerValor(opcion);
+        opcionGris+=5;
+        System.out.println("antes de entrar "  +opcionGris);
+        if(opcionGris!=6 && opcionGris!=7 && opcionGris!=8){
+            opcionGris=5;
+        }
+        System.out.println("despues de entrar "  +opcionGris);
+            BufferedImage nuevobuffered =buffered;
+            Image nuevaImagen=imagen.getImage(nuevobuffered,opcionGris);
+           return nuevaImagen;
+        }else{
+            return actualizarImagenColor();
+        }
+        
     }
      public void setImagen(BufferedImage img){
         this.buffered=img;

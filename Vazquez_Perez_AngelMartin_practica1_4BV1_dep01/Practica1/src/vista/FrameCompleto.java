@@ -53,15 +53,7 @@ public class FrameCompleto extends JFrame{
         seleccionarImagen();
         buffered = new ImageBufferedImage();
         panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(4, 1, 4, 4));
-        JButton botonOriginal = new JButton("MENU PRINCIPAL");
-        botonOriginal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CardLayout card = (CardLayout)panelPrincipal.getLayout();
-                card.show(panelPrincipal, "panel original");
-            }
-        });
+        panelBotones.setLayout(new GridLayout(3, 1, 4, 4));
         JButton botonBrillo = new JButton("MODIFICAR BRILLO");
         botonBrillo.addActionListener(new ActionListener() {
             @Override
@@ -88,7 +80,6 @@ public class FrameCompleto extends JFrame{
         });
         Container contenedor = this.getContentPane();
         contenedor.setLayout(new BorderLayout());
-        panelBotones.add(botonOriginal);
         panelBotones.add(botonCanales);
         panelBotones.add(botonBrillo);
         panelBotones.add(botonContraste);
@@ -118,8 +109,8 @@ public class FrameCompleto extends JFrame{
         panelPrincipal.add(panelCanales, "panel canales");
         contenedor.add(panelPrincipal, BorderLayout.CENTER);
         
-        setSize(500, 500);
-        setLocation(222, 222);
+        setSize(800, 700);
+        setLocation(222, 22);
         setVisible(true);
     }
     private void seleccionarImagen() {
