@@ -15,14 +15,14 @@ import javax.swing.JFrame;
  *
  * @author jhona
  */
-public class RGBtoYIQ {
+public class RGBtoHSI {
     private Image img;
     private BufferedImage buffered;
     private ImageBufferedImage imageBuffered;
     private int alto;
     private int ancho;
-    private Image imagenYIQ;
-    public RGBtoYIQ(BufferedImage buffered){
+    private Image imagenHSI;
+    public RGBtoHSI(BufferedImage buffered){
         this.buffered=buffered;
         alto=buffered.getHeight();
         ancho=buffered.getWidth();
@@ -31,11 +31,11 @@ public class RGBtoYIQ {
         initComponents();
     }
     public void initComponents(){
-        imagenYIQ=this.convertirRGBtoYIQ();
+        imagenHSI=this.convertirRGBtoHIS();
     }
-    public Image convertirRGBtoYIQ(){
+    public Image convertirRGBtoHIS(){
         int[][] nuevaImagen= new int [alto][ancho];
-        int Y,I,Q;
+        double I,S,H;
         for(int y=0; y<alto ; y++){
             for(int x=0; x<ancho ; x ++){
                 Color color=null;
@@ -43,10 +43,20 @@ public class RGBtoYIQ {
                 int rojo  = (pixel & 0x00ff0000) >> 16;
                 int verde = (pixel & 0x0000ff00) >> 8;
                 int azul  =  pixel & 0x000000ff;
-                Y = (int) (.299*rojo + .587*verde + .114*azul);
-                I =(int) (.596*rojo - .274*verde - .322*azul);
-		Q =(int) (.211*rojo - .523*verde + .312*azul);
-                color = new Color(Y,I+128,Q+128);
+
+                float min = Math.min(rojo, Math.min(verde, azul));
+                I = (rojo + verde + azul) / 3.0f;
+                S = 1 - ((min*3) / (rojo+verde+azul));
+
+                H = (float) Math.toDegrees(Math.acos((0.5 * ((rojo - verde) + (rojo - azul))) /
+                        (Math.sqrt((rojo - verde) * (rojo - verde) + (rojo - azul) * (verde - azul)))));
+                if (azul > verde){
+                    H = 360 - H;
+                }
+                if(H>255){
+                    H=255;
+                }
+                color = new Color((int) H, (int) S * 255, (int) I );
                 nuevaImagen[y][x]=color.getRGB();
             }
         }
@@ -59,11 +69,11 @@ public class RGBtoYIQ {
     }
     public Image[] obtenerImagenes(){
         Image[] imagenes = new Image[4];
-        imagenes[0]=imagenYIQ;
-        BufferedImage bufferedYIQ=imageBuffered.getBufferedImageColor(imagenYIQ);
-        imagenes[1]=imageBuffered.getImage(bufferedYIQ, 6);
-        imagenes[2]=imageBuffered.getImage(bufferedYIQ, 7);
-        imagenes[3]=imageBuffered.getImage(bufferedYIQ, 8);
+        imagenes[0]=imagenHSI;
+        BufferedImage bufferedHIS=imageBuffered.getBufferedImageColor(imagenHSI);
+        imagenes[1]=imageBuffered.getImage(bufferedHIS, 6);
+        imagenes[2]=imageBuffered.getImage(bufferedHIS, 7);
+        imagenes[3]=imageBuffered.getImage(bufferedHIS, 8);
         return imagenes;
     }
     public void setImagen(Image imagen){
@@ -74,3 +84,4 @@ public class RGBtoYIQ {
         initComponents();
     }
 }
+

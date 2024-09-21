@@ -24,6 +24,7 @@ public class RGBtoCMY {
     private ImageBufferedImage imageBuffered;
     private int alto;
     private int ancho;
+    private Image imagenCMY;
     private Image imagenC;
     private Image imagenM;
     private Image imagenY;
@@ -36,11 +37,12 @@ public class RGBtoCMY {
         initComponents();
     }
     public void initComponents(){
+        imagenCMY=this.convertirRGBtoCMY();
         imagenC=this.obtenerC();
         imagenM=this.obtenerM();
         imagenY=this.obtenerY();
     }
-    public Image convertirRGBtoCMY(Image imagen){
+    public Image convertirRGBtoCMY(){
         int[][] nuevaImagen= new int [alto][ancho];
         int C,M,Y;
         for(int y=0; y<alto ; y++){
@@ -134,17 +136,27 @@ public class RGBtoCMY {
         return imagenNueva;
     }
     public Image[] obtenerImagenes(){
-        Image[] imagenes = new Image[3];
-        imagenes[0]=imagenC;
-        imagenes[1]=imagenM;
-        imagenes[2]=imagenY;
+        Image[] imagenes = new Image[4];
+        imagenes[0]=imagenCMY;
+        imagenes[1]=imagenC;
+        imagenes[2]=imagenM;
+        imagenes[3]=imagenY;
         return imagenes;
     }
     public Image[] obtenerImagenesGrises(){
-        Image[] imagenesGrises= new Image[3];
-        imagenesGrises[0]= imageBuffered.getImage(imageBuffered.getBufferedImageColor(imagenC),5);
-        imagenesGrises[1]= imageBuffered.getImage(buffered, 7);
-        imagenesGrises[2]= imageBuffered.getImage(buffered, 8);
+        Image[] imagenesGrises= new Image[4];
+        BufferedImage bufferedCMY = imageBuffered.getBufferedImageColor(imagenCMY);
+        imagenesGrises[0]=imageBuffered.getImage(bufferedCMY,5);
+        imagenesGrises[1]= imageBuffered.getImage(bufferedCMY,6);
+        imagenesGrises[2]= imageBuffered.getImage(bufferedCMY,7);
+        imagenesGrises[3]= imageBuffered.getImage(bufferedCMY,8);
         return imagenesGrises;
+    }
+    public void setImagen(Image imagen){
+        this.img=imagen;
+        this.buffered=imageBuffered.getBufferedImageColor(imagen);
+        alto=buffered.getHeight();
+        ancho=buffered.getWidth();
+        initComponents();
     }
 }

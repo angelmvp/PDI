@@ -23,6 +23,10 @@ public class ConversorRGB {
     private int ancho;
     private  RGBtoColores conversionRGBtoColores;
     private RGBtoCMY conversionRGBtoCMY;
+    private RGBtoYIQ conversionRGBtoYIQ;
+    private RGBtoHSI conversionRGBtoHSI;
+    private RGBtoHSV conversionRGBtoHSV;
+    private RGBtoLAB conversionRGBtoLAB;
     
     public ConversorRGB(BufferedImage buffered){
         this.buffered=buffered;
@@ -35,13 +39,12 @@ public class ConversorRGB {
     public void initComponents(){
        conversionRGBtoColores = new RGBtoColores(buffered);
        conversionRGBtoCMY= new RGBtoCMY(buffered);
+       conversionRGBtoYIQ=new RGBtoYIQ(buffered);
+       conversionRGBtoHSI=new RGBtoHSI(buffered);
+       conversionRGBtoHSV= new RGBtoHSV(buffered);
+       conversionRGBtoLAB= new RGBtoLAB(buffered);
     }
     
-    public Image toCMY(){
-        RGBtoCMY conversionRGBtoCMY = new RGBtoCMY(buffered);
-        System.out.println("de RGB a CMY");
-        return conversionRGBtoCMY.convertirRGBtoCMY(img);
-    }
     public Image[] toCMYCanales(){
         return conversionRGBtoCMY.obtenerImagenes();
     }
@@ -49,20 +52,16 @@ public class ConversorRGB {
         return conversionRGBtoCMY.obtenerImagenesGrises();
     }
     public Image[] toHIS(){
-     Image[] nueva={img,img,img};
-     return nueva;
+        return conversionRGBtoHSI.obtenerImagenes();
     }
     public Image[] toHSV(){
-     Image[] nueva={img,img,img};
-     return nueva;
+        return conversionRGBtoHSV.obtenerImagenes();
     }
     public Image[] toYIQ(){
-     Image[] nueva={img,img,img};
-     return nueva;
+     return conversionRGBtoYIQ.obtenerImagenes();
     }
     public Image[] toLAB(){
-     Image[] nueva={img,img,img};
-     return nueva;
+        return conversionRGBtoLAB.obtenerImagenes();
     }
     public Image[] toRGBCanales(){
      System.out.println("de RGB a canales colores");
@@ -78,6 +77,11 @@ public class ConversorRGB {
         alto=buffered.getHeight();
         ancho=buffered.getWidth();
         conversionRGBtoColores.setImagen(imagen);
+        conversionRGBtoCMY.setImagen(imagen);
+        conversionRGBtoYIQ.setImagen(imagen);
+        conversionRGBtoHSI.setImagen(imagen);
+        conversionRGBtoHSV.setImagen(imagen);
+        conversionRGBtoLAB.setImagen(imagen);
     }
    
 }

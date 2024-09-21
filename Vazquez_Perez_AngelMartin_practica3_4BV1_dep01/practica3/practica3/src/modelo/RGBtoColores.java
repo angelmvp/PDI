@@ -18,6 +18,7 @@ public class RGBtoColores {
     private ImageBufferedImage imageBuffered;
     private int alto;
     private int ancho;
+    private Image imagenColor;
     private Image imagenRojo;
     private Image imagenVerde;
     private Image imagenAzul;
@@ -31,6 +32,7 @@ public class RGBtoColores {
         initComponents();
     }
     public void initComponents(){
+        imagenColor=img;
         imagenRojo= this.obtenerCanalRojo();
         imagenVerde=this.obtenerCanalVerde();
         imagenAzul=this.obtenerCanalAzul();
@@ -46,17 +48,19 @@ public class RGBtoColores {
     }
     
     public Image[]obtener3Canales(){
-        Image[] imagenes = new Image[3];
-        imagenes[0]=imagenRojo;
-        imagenes[1]=imagenVerde;
-        imagenes[2]=imagenAzul;
+        Image[] imagenes = new Image[4];
+        imagenes[0]=imagenColor;
+        imagenes[1]=imagenRojo;
+        imagenes[2]=imagenVerde;
+        imagenes[3]=imagenAzul;
         return imagenes;
     }
     public Image[] obtener3CanalesGrises(){
-        Image[] imagenes = new Image[3];
-        imagenes[0]=imageBuffered.getImage(buffered, 6);
-        imagenes[1]=imageBuffered.getImage(buffered, 7);
-        imagenes[2]=imageBuffered.getImage(buffered, 8);       
+        Image[] imagenes = new Image[4];
+        imagenes[0] = imageBuffered.getImage(buffered, 5);
+        imagenes[1]=imageBuffered.getImage(buffered, 6);
+        imagenes[2]=imageBuffered.getImage(buffered, 7);
+        imagenes[3]=imageBuffered.getImage(buffered, 8);       
         return imagenes;        
     }
     public void setImagen(Image imagen){
