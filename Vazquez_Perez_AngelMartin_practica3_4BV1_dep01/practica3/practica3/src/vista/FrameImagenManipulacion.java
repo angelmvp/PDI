@@ -24,14 +24,13 @@ import modelo.ImageBufferedImage;
  */
 public class FrameImagenManipulacion extends JFrame {
     private Image imagen;
-    private PanelImagen panelImagenOriginal;
-    private PanelImagen panelImagenConvertida;
     private JPanel panelPrincipal;
     private BufferedImage buffered;
     private ImageBufferedImage imageBuffered;
     private JPanel panelBotones;
-    private JPanel panelConversion;
+    private PanelConversion panelConversion;
     private PanelImagenHistograma panelImagenHistograma;
+
     public FrameImagenManipulacion(Image imagen) {
         this.imagen=imagen;
         initComponents();
@@ -39,18 +38,9 @@ public class FrameImagenManipulacion extends JFrame {
     public void initComponents(){
         imageBuffered = new ImageBufferedImage();
         buffered=imageBuffered.getBufferedImageColor(imagen);
-        panelImagenOriginal=new PanelImagen(imagen);
-        panelImagenConvertida= new PanelImagen(imagen);
         panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayout(3, 1, 4, 4));
-            panelConversion = new JPanel();
-            panelConversion.setLayout(new BorderLayout());
-            JPanel panelCentro= new JPanel(new GridLayout(1,2));
-            panelCentro.add(panelImagenOriginal);
-            panelCentro.add(panelImagenConvertida);
-            JButton botonConvertir = new JButton("invertir Conversion");
-            panelConversion.add(panelCentro,BorderLayout.CENTER);
-            panelConversion.add(botonConvertir, BorderLayout.NORTH);           
+
         JButton botonConversion = new JButton("Conversion");
         botonConversion.addActionListener(new ActionListener() {
             @Override
@@ -67,6 +57,7 @@ public class FrameImagenManipulacion extends JFrame {
                 card.show(panelPrincipal, "panel histograma");
             }
         });
+        panelConversion= new PanelConversion(imagen);
         panelImagenHistograma=new PanelImagenHistograma(imagen);
         Container contenedor = this.getContentPane();
         contenedor.setLayout(new BorderLayout());
@@ -75,7 +66,6 @@ public class FrameImagenManipulacion extends JFrame {
         contenedor.add(panelBotones, BorderLayout.EAST);
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new CardLayout());
-        //panelHistograma = new PanelHistograma(imagen);
         panelPrincipal.add(panelConversion, "panel conversion");
         panelPrincipal.add(panelImagenHistograma, "panel histograma");
         contenedor.add(panelPrincipal, BorderLayout.CENTER);       

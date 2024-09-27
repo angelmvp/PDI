@@ -171,6 +171,15 @@ public class Histograma {
             }
         return builder.toString();
     }
+    public String obtenerInformacion(){
+        String mensaje= "La media es : " + media  +
+                " \nla varianza es : " + varianza +
+                " \nla asimetria es : " + asimetria +
+                " \nla energia es : "+ asimetria+ 
+                " \nla entropia es : " + entropia ;
+        System.out.println(mensaje);
+        return mensaje;
+    }
     public int[] getHi(){
         return hi;
     }
@@ -204,6 +213,25 @@ public class Histograma {
     asimetria = 0.0;
     energia = 0.0;
     entropia = 0.0;
+    }
+    public double getMedia() {
+        return media;
+    }
+
+    public double getVarianza() {
+        return varianza;
+    }
+
+    public double getAsimetria() {
+        return asimetria;
+    }
+
+    public double getEnergia() {
+        return energia;
+    }
+
+    public double getEntropia() {
+        return entropia;
     }
 }
 

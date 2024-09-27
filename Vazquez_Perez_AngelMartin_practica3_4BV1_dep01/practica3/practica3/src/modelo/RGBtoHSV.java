@@ -31,69 +31,82 @@ public class RGBtoHSV {
         initComponents();
     }
     public void initComponents(){
-        imagenHSV=this.convertirRGBtoHSV();
+        imagenHSV=this.convertirRGBtoHSV(1);
     }
-    public Image convertirRGBtoHSV(){
-        int[][] nuevaImagen= new int [alto][ancho];
-        double H,S,V;
-        for (int y = 0; y < alto; y++) {
-            for (int x = 0; x < ancho; x++) {
-                int pixel = buffered.getRGB(x, y);
-                int rojo = (pixel & 0x00ff0000) >> 16;
-                int verde = (pixel & 0x0000ff00) >> 8;
-                int azul = pixel & 0x000000ff;
+    public Image convertirRGBtoHSV(int selector ) {
+    int[][] nuevaImagen = new int[alto][ancho];
+    double H, S, V;
 
-                // Obtener el valor mínimo y máximo
-                float min = Math.min(rojo, Math.min(verde, azul));
-                float Max = Math.max(rojo, Math.max(verde, azul));
+    for (int y = 0; y < alto; y++) {
+        for (int x = 0; x < ancho; x++) {
+            Color color=null;
+            int pixel = buffered.getRGB(x, y);
+            int rojo = (pixel & 0x00ff0000) >> 16;
+            int verde = (pixel & 0x0000ff00) >> 8;
+            int azul = pixel & 0x000000ff;
 
-                // Cálculo del valor (V)
-                V = Max / 255.0;
+            // Convertir los valores RGB a rango [0, 1]
+            double r = rojo / 255.0;
+            double g = verde / 255.0;
+            double b = azul / 255.0;
 
-                // Cálculo de la saturación (S)
-                S = (Max > 0) ? (1 - (min / Max)) : 0;
+            // Encontrar el valor máximo y mínimo de los tres componentes
+            double max = Math.max(r, Math.max(g, b));
+            double min = Math.min(r, Math.min(g, b));
 
-                // Cálculo del tono (H)
-                double numerador = (rojo - 0.5 * verde - 0.5 * azul);
-                double denominador = Math.sqrt(rojo * rojo + verde * verde + azul * azul - rojo * verde - rojo * azul - verde * azul);
-                
-                if (denominador == 0) {
-                    H = 0; // Evitar divisiones por cero
+            // Valor (V) en el modelo HSV
+            V = max;
+
+            // Saturación (S)
+            S = (max != 0) ? (max - min) / max : 0;
+
+            // Hue (H)
+            if (S == 0) {
+                H = 0; // Si no hay saturación, el tono es 0
+            } else {
+                if (max == r) {
+                    H = (g - b) / (max - min);
+                } else if (max == g) {
+                    H = 2 + (b - r) / (max - min);
                 } else {
-                    H = Math.acos(numerador / denominador);
-                    if (verde < azul) {
-                        H = 360 - H;
-                    }
+                    H = 4 + (r - g) / (max - min);
                 }
-                // Convertir H a grados y limitar a 360 grados
-                H = Math.toDegrees(H);
-                if (H < 0) H += 360;
-                if (H > 360) H = 360;
 
-                // Normalización a la escala de 0 a 255
-                H = (H / 360.0) * 255.0;
-                S = S * 255.0;
-                V = V * 255.0;
-
-                // Crear un nuevo color basado en los valores H, S, V
-                Color color = new Color((int) H, (int) S, (int) V);
-                nuevaImagen[y][x]= color.getRGB();
+                H *= 60; // Convertir H a grados
+                if (H < 0) {
+                    H += 360; // Asegurarse de que el valor de H esté en [0, 360]
+                }
             }
+
+            // Convertir H a escala [0, 255] para la imagen
+            H = (H / 360.0) * 255.0;
+            S = S * 255.0;
+            V = V * 255.0;
+
+            // Crear el color en el espacio HSV y asignarlo a la nueva imagen
+            if(selector==1) color = new Color((int) H, (int) S, (int) V);
+            if(selector==2) color = new Color((int) H, (int) H, (int) H);
+            if(selector==3) color = new Color((int) S, (int) S, (int) S);
+            if(selector==4) color = new Color((int) V, (int) V, (int) V);
+            nuevaImagen[y][x] = color.getRGB();
         }
-        JFrame padre = new JFrame();
-        Image imagenNueva = padre.createImage(new MemoryImageSource(ancho,
-                alto, imageBuffered.convertirInt2DAInt1D(nuevaImagen, ancho, alto),
-                0, ancho));
-        System.out.println("se retorno la imagen");
-        return imagenNueva;
     }
+
+    // Crear la nueva imagen con los valores convertidos a HSV
+    JFrame padre = new JFrame();
+    Image imagenNueva = padre.createImage(new MemoryImageSource(ancho, alto, imageBuffered.convertirInt2DAInt1D(nuevaImagen, ancho, alto), 0, ancho));
+
+    System.out.println("RGB to HSV conversión completada");
+    return imagenNueva;
+}
+
     public Image[] obtenerImagenes(){
         Image[] imagenes = new Image[4];
         imagenes[0]=imagenHSV;
         BufferedImage bufferedHIS=imageBuffered.getBufferedImageColor(imagenHSV);
-        imagenes[1]=imageBuffered.getImage(bufferedHIS, 6);
-        imagenes[2]=imageBuffered.getImage(bufferedHIS, 7);
-        imagenes[3]=imageBuffered.getImage(bufferedHIS, 8);
+        imagenes[1]=this.convertirRGBtoHSV(2);
+        imagenes[2]=this.convertirRGBtoHSV(3);
+        imagenes[3]=this.convertirRGBtoHSV(4);
         return imagenes;
     }
     public void setImagen(Image imagen){

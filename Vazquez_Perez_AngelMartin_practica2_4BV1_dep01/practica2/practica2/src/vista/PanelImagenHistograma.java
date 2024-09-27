@@ -52,7 +52,7 @@ public class PanelImagenHistograma extends JPanel {
         panelImagen = new PanelImagen(img);
         panelHistograma= new PanelHistograma(histograma.getPi(),Color.GRAY);
         this.setLayout(new BorderLayout());
-        botonGenerar= new JButton("Generar Histograma");
+        botonGenerar= new JButton("Obtener Informacion Histograma");
         tipoHistograma = new JComboBox<>();
         tipoHistograma.addItem("Histograma");
         tipoHistograma.addItem("Histograma acumulado");
@@ -63,7 +63,6 @@ public class PanelImagenHistograma extends JPanel {
         tipoImagen.addItem("Roja");
         tipoImagen.addItem("Verde");
         tipoImagen.addItem("Azul");
-        tipoImagen.addItem("Todos los Colores");
         
         JPanel panelTop = new JPanel();
         panelTop.add(tipoImagen);
@@ -79,8 +78,7 @@ public class PanelImagenHistograma extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e){
                 generarFrame();
-            }   
-                
+            }             
             });
             tipoHistograma.addItemListener(new ItemListener() {
             @Override
@@ -115,9 +113,6 @@ public class PanelImagenHistograma extends JPanel {
         }else if(opcion=="Azul"){
             canal=3;
             color=Color.BLUE;
-        }else if(opcion=="Todos los Colores"){
-            canal=4;
-            color=Color.gray;
         }
         return canal;
     }
@@ -125,6 +120,11 @@ public class PanelImagenHistograma extends JPanel {
         int canal= obtenerCanal((String) tipoImagen.getSelectedItem());
         imagenInt=bufferedImage.getMatrizImagen(imagen, canal);
         histograma.setNuevaMatriz(imagenInt);
+        if(canal==5){
+            panelImagen.setImagen(bufferedImage.getImage(imagen, canal));
+        }else{
+            panelImagen.setImagen(img);
+        }
         actualizarHistograma();
     }
     public void actualizarHistograma(){
@@ -154,21 +154,7 @@ public class PanelImagenHistograma extends JPanel {
     }
     public void generarFrame(){
        PanelHistograma nuevoPanel = new PanelHistograma(this.panelHistograma);
-       FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,nuevoPanel);
+       FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,nuevoPanel,histograma);
     }
-    public void imprimirArreglo(int[] datos){
-            for(int x=0; x<200; x++){
-                System.out.println(datos[x]);
-            }
-    }
-    public void imprimir(){
-         for(int y=0; y<imagen.getHeight();y++){
-            for(int x=0; x<imagen.getWidth(); x++){
-                if(imagenInt[y][x]>253){
-                System.out.println(imagenInt[y][x]);
-            }
-                
-            }
-        }
-    }
+
 }

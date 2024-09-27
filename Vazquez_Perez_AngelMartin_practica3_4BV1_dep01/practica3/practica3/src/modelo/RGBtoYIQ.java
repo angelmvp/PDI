@@ -46,7 +46,12 @@ public class RGBtoYIQ {
                 Y = (int) (.299*rojo + .587*verde + .114*azul);
                 I =(int) (.596*rojo - .274*verde - .322*azul);
 		Q =(int) (.211*rojo - .523*verde + .312*azul);
-                color = new Color(Y,I+128,Q+128);
+                I+=128;
+                Q+=128;
+                Y=validar(Y);
+                Q=validar(Q);
+                I=validar(I);
+                color = new Color(Y,I,Q);
                 nuevaImagen[y][x]=color.getRGB();
             }
         }
@@ -72,5 +77,13 @@ public class RGBtoYIQ {
         alto=buffered.getHeight();
         ancho=buffered.getWidth();
         initComponents();
+    }
+    public int validar(int numero){
+        if(numero>255){
+            return 255;
+        }else if (numero<0){
+            return 0;
+        }
+        return numero;
     }
 }

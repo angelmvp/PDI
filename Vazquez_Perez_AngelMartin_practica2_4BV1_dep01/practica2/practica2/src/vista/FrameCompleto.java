@@ -69,7 +69,7 @@ public class FrameCompleto extends JFrame{
         contenedor.add(botonCargar, BorderLayout.NORTH);
         contenedor.add(panelImagenHistograma, BorderLayout.CENTER);
         setContentPane(contenedor);
-        setSize(500, 500);
+        setSize(900, 500);
         setLocation(222, 222);
         setVisible(true);
     }
