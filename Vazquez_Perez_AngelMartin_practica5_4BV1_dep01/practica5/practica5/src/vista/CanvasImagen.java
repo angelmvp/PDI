@@ -30,14 +30,16 @@ public class CanvasImagen extends Canvas {
             int panelWidth = this.getWidth();
             int panelHeight = this.getHeight();
             
-            
+            // Obtiene las dimensiones originales de la imagen
             int imageWidth = imagen.getWidth(this);
             int imageHeight = imagen.getHeight(this);
             
+            // Calcula las nuevas dimensiones manteniendo la relación de aspecto
             float aspectRatio = (float) imageWidth / imageHeight;
             int newWidth = panelWidth;
             int newHeight = (int) (panelWidth / aspectRatio);
             
+            // Si la nueva altura excede el tamaño del panel, ajusta por la altura
             if (newHeight > panelHeight) {
                 newHeight = panelHeight;
                 newWidth = (int) (panelHeight * aspectRatio);

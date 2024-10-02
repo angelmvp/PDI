@@ -1,4 +1,4 @@
-package modelo;
+    package modelo;
 
 import java.awt.Color;
 import java.awt.Image;
@@ -26,7 +26,7 @@ public class ImageBufferedImage {
      * 
      * @return Devuelve ob objeto de tipo image
      */
-        public Image getImage(BufferedImage input, int queCanal) {
+    public Image getImage(BufferedImage input, int queCanal) {
         int alto = input.getHeight();
         int ancho = input.getWidth();
         int pixel;
@@ -103,6 +103,7 @@ public class ImageBufferedImage {
         int alto = input.getHeight();
         int ancho = input.getWidth();
         int pixel;
+        
         int [][] imagenInt = new int[alto][ancho];
         for(int y=0; y<alto; y++) {
             for(int x=0; x<ancho; x++) {
@@ -146,7 +147,7 @@ public class ImageBufferedImage {
                 int elPixel;
                 Color color = null;
                     int gris = (rojo + verde + azul) / 3;
-                            gris *= escalar;
+                            gris = (int)(escalar*(gris-128)) + 128;
                             if(gris>255) {
                             gris = 255;
                             }
@@ -216,6 +217,8 @@ public class ImageBufferedImage {
         for(int y=0; y<alto; y++) {
             for(int x=0; x<ancho; x++) {
                 int pixel = matrizImagen[y][x];
+                int rojo  = (pixel & 0x00ff0000) >> 16;
+                int verde = (pixel & 0x0000ff00) >>  8;
                 int azul  =  pixel & 0x000000ff;
                 Color color = new Color(azul, azul, azul);
                 pixel = color.getRGB();
@@ -290,5 +293,51 @@ public class ImageBufferedImage {
     public int[][] getMatrizImagen() {
         return matrizImagen;
     }
+    
+public int[][] getMatrizImagen(BufferedImage input, int opcion) {
+    int alto = input.getHeight();
+    int ancho = input.getWidth();
+    int pixel;
+
+    // Crear la matriz para almacenar los valores de la imagen procesada
+    int[][] matrizImagen = new int[alto][ancho];
+
+    for (int y = 0; y < alto; y++) {
+        for (int x = 0; x < ancho; x++) {
+            pixel = input.getRGB(x, y);
+             
+            int rojo = (pixel & 0x00ff0000) >> 16;
+            int verde = (pixel & 0x0000ff00) >> 8;
+            int azul = pixel & 0x000000ff;
+
+            int valorPixel;
+            switch (opcion) {
+                case 1: 
+                    valorPixel = rojo;
+                    break;
+                case 2: 
+                    valorPixel = verde;
+                    break;
+                case 3:
+                    valorPixel = azul;
+                    break;
+                case 4: 
+                    valorPixel = pixel;
+                    break;
+                case 5: 
+                    int gris = (rojo + verde + azul) / 3;
+                    valorPixel = gris;  
+                    break;
+                default:
+                    valorPixel = pixel; 
+                    break;
+            }
+            matrizImagen[y][x] = valorPixel;
+        }
+    }
+
+    return matrizImagen;
+}
+
     
 }

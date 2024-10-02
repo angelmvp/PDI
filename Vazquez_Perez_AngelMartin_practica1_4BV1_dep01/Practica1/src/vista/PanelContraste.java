@@ -31,7 +31,7 @@ public class PanelContraste extends JPanel {
     public void initcomponents() {
         imagen = new ImageBufferedImage();
         JPanel panelTop = new JPanel(new GridLayout(2,1));
-        this.contraste = new JSlider(-200, 200, 0);
+        this.contraste = new JSlider(0, 200, 0);
         this.contraste.setMajorTickSpacing(50);
         this.contraste.setPaintTicks(true);
         this.contraste.setPaintLabels(true);
