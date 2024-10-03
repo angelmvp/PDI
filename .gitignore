@@ -1,0 +1,9 @@
+/Vazquez_Perez_AngelMartin_practica3_4BV1_dep01/practica3/practica3/dist/
+/Vazquez_Perez_AngelMartin_practica5_4BV1_dep01/practica5/practica5/nbproject/private/
+/Vazquez_Perez_AngelMartin_practica5_4BV1_dep01/practica5/practica5/build/
+# Ignorar archivos de Word
+*.doc
+*.docx
+
+# Ignorar archivos PDF
+*.pdf

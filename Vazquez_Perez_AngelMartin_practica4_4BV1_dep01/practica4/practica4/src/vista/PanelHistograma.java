@@ -39,53 +39,64 @@ public class PanelHistograma extends JPanel{
         this.color = panel.color;
         panel.repaint();
     }
-        @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        int padding = 60; 
-        int labelPadding = 40; 
-        int height = getHeight();
-        int width;
-        double maxVal=0;
+    @Override
+protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    int padding = 60; 
+    int labelPadding = 40; 
+    int height = getHeight();
+    int width=0;
+    double maxVal = 0;
 
-        if (datosInt != null) {
-            width = getWidth() / datosInt.length;
-            maxVal = getMax(datosInt);
+    if (datosInt != null) {
+        width = (getWidth() - 2 * padding) / datosInt.length;
+        maxVal = getMax(datosInt);
 
-            g.drawLine(padding, height - padding, padding, padding); // Eje Y
-            g.drawLine(padding, height - padding, getWidth() - padding, height - padding); // Eje X
+        g.drawLine(padding, height - padding, padding, padding); // Eje Y
+        g.drawLine(padding, height - padding, getWidth() - padding, height - padding); // Eje X
 
-            
-            g.setColor(color);
-            for (int i = 0; i < datosInt.length; i++) {
-                int barHeight = (int) ((datosInt[i] / maxVal) * (height - 2 * padding));
-                g.fillRect(padding + (i * width), height - padding - barHeight, width, barHeight);
-            }
-
-        } else if (datosDouble != null) {
-            width = getWidth() / datosDouble.length;
-            maxVal = getMax(datosDouble);
-
-            g.drawLine(padding, height - padding, padding, padding); // Eje Y
-            g.drawLine(padding, height - padding, getWidth() - padding, height - padding); // Eje X
-            g.setColor(color);
-            for (int i = 0; i < datosDouble.length; i++) {
-                int barHeight = (int) ((datosDouble[i] / maxVal) * (height - 2 * padding));
-                g.fillRect(padding + (i * width), height - padding - barHeight, width, barHeight);
-            }
+        g.setColor(color);
+        for (int i = 0; i < datosInt.length; i++) {
+            int barHeight = (int) ((datosInt[i] / maxVal) * (height - 2 * padding));
+            g.fillRect(padding + (i * width), height - padding - barHeight, width, barHeight);
         }
 
-        // Etiquetas del eje Y (Frecuencia)
-        g.setColor(Color.BLACK);
-        g.setFont(new Font("Arial", Font.PLAIN, 12));
-        int numberYDivisions = 6;
-        for (int i = 0; i <= numberYDivisions; i++) {
-            int yPos = height - padding - (i * (height - 2 * padding) / numberYDivisions);
-            double yValue = maxVal * i / numberYDivisions;
-            g.drawLine(padding, yPos, padding , yPos); 
-            g.drawString(String.format("%.1f", yValue), padding - labelPadding, yPos + 5); // Etiquetas del eje Y
+    } else if (datosDouble != null) {
+        width = (getWidth() - 2 * padding) / datosDouble.length;
+        maxVal = getMax(datosDouble);
+
+        g.drawLine(padding, height - padding, padding, padding); // Eje Y
+        g.drawLine(padding, height - padding, getWidth() - padding, height - padding); // Eje X
+
+        g.setColor(color);
+        for (int i = 0; i < datosDouble.length; i++) {
+            int barHeight = (int) ((datosDouble[i] / maxVal) * (height - 2 * padding));
+            g.fillRect(padding + (i * width), height - padding - barHeight, width, barHeight);
         }
     }
+
+    // Etiquetas del eje Y (Frecuencia)
+    g.setColor(Color.BLACK);
+    g.setFont(new Font("Arial", Font.PLAIN, 12));
+    int numberYDivisions = 6;
+    for (int i = 0; i <= numberYDivisions; i++) {
+        int yPos = height - padding - (i * (height - 2 * padding) / numberYDivisions);
+        double yValue = maxVal * i / numberYDivisions;
+        g.drawLine(padding, yPos, padding + 5, yPos); 
+        g.drawString(String.format("%.1f", yValue), padding - labelPadding, yPos + 5); // Etiquetas del eje Y
+    }
+
+    // Etiquetas del eje X
+    if (datosInt != null || datosDouble != null) {
+        int dataLength = datosInt != null ? datosInt.length : datosDouble.length;
+        for (int i = 0; i < dataLength; i+=25) {
+            int xPos = padding + (i * width) + width / 2;
+            g.drawLine(xPos, height - padding, xPos, height - padding - 5);
+            g.drawString(String.valueOf(i + 1), xPos - 5, height - padding + labelPadding / 2); // Etiquetas del eje X
+        }
+    }
+}
+
 
     private double getMax(int[] data) {
         int max = 0;

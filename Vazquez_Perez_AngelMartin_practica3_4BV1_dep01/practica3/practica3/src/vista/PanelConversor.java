@@ -81,7 +81,7 @@ public class PanelConversor extends JPanel{
                 generarFrame();
             }             
             });
-      
+        actualizarConversion();
     }
 
 public void actualizarConversion() {

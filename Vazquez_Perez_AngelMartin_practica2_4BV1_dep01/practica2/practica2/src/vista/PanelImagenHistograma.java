@@ -154,7 +154,7 @@ public class PanelImagenHistograma extends JPanel {
     }
     public void generarFrame(){
        PanelHistograma nuevoPanel = new PanelHistograma(this.panelHistograma);
-       FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,nuevoPanel,histograma);
+       FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,nuevoPanel,this.histograma);
     }
 
 }

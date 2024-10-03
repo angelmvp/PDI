@@ -95,9 +95,9 @@ public Image ajustarUmbral(int umbral) {
                 if (gris <= umbral1) {
                     nuevoGris=0;
                 } else if (gris <= umbral2) {
-                    nuevoGris=64;
+                    nuevoGris=85;
                 } else if(gris<=umbral3) {
-                    nuevoGris=192;
+                    nuevoGris=170;
                 }else{
                     nuevoGris=255;
                 }

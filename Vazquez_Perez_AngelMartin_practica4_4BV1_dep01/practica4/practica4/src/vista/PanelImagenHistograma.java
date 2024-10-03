@@ -52,7 +52,7 @@ public class PanelImagenHistograma extends JPanel {
         panelImagen = new PanelImagen(img);
         panelHistograma= new PanelHistograma(histograma.getPi(),Color.GRAY);
         this.setLayout(new BorderLayout());
-        botonGenerar= new JButton("Generar Histograma");
+        botonGenerar= new JButton("Obtener Informacion Histograma");
         tipoHistograma = new JComboBox<>();
         tipoHistograma.addItem("Histograma");
         tipoHistograma.addItem("Histograma acumulado");
@@ -154,21 +154,7 @@ public class PanelImagenHistograma extends JPanel {
     }
     public void generarFrame(){
        PanelHistograma nuevoPanel = new PanelHistograma(this.panelHistograma);
-       FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,nuevoPanel,histograma);
+       FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,nuevoPanel);
     }
-    public void imprimirArreglo(int[] datos){
-            for(int x=0; x<200; x++){
-                System.out.println(datos[x]);
-            }
-    }
-    public void imprimir(){
-         for(int y=0; y<imagen.getHeight();y++){
-            for(int x=0; x<imagen.getWidth(); x++){
-                if(imagenInt[y][x]>253){
-                System.out.println(imagenInt[y][x]);
-            }
-                
-            }
-        }
-    }
+
 }

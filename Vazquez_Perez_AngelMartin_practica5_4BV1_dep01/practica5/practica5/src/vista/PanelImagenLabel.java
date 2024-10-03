@@ -28,7 +28,9 @@ public class PanelImagenLabel extends JPanel {
         initComponents();
     }
     public void initComponents(){
+        System.out.println("si siuge");
         panel=new PanelImagen(imagen);
+        System.out.println("ya valio");
         botonGenerar = new JButton("Generar Frame");
         this.setLayout(new BorderLayout());
         this.add(panel,BorderLayout.CENTER);
