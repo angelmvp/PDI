@@ -8,7 +8,6 @@ package vista;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import javax.swing.JPanel;
-import java.awt.*;
 
 /**
  *

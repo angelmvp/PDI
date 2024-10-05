@@ -11,16 +11,12 @@ import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import modelo.ImageBufferedImage;
 import modelo.Umbralizacion;
 
@@ -34,9 +30,8 @@ public class PanelUmbral extends JPanel {
     private Image imagenUmbralizada;
     private BufferedImage buffered;
     private ImageBufferedImage imageBuffered;
-    private PanelImagenLabel panelImagen;
-    private PanelImagenLabel panelImagenUmbralizada;
-    private JComboBox<String> comboUmbral;
+    private PanelImagenHistograma panelImagen;
+    private PanelImagenHistograma panelImagenUmbralizada;
     private JSlider sliderPrimerUmbral;
     private JSlider sliderSegundoUmbral;
     private JSlider sliderTercerUmbral;
@@ -67,8 +62,8 @@ public class PanelUmbral extends JPanel {
         sliderTercerUmbral.setPaintLabels(true);
         checkNegativo = new JCheckBox("Negativo de La imagen");
         botonAplicar = new JButton("Aplicar");
-        panelImagen= new PanelImagenLabel(imagenGrises,new Label("Imagen Original"));
-        panelImagenUmbralizada= new PanelImagenLabel(imagenUmbralizada, new Label("Imagen Umbralizada"));
+        panelImagen= new PanelImagenHistograma(imagenGrises);
+        panelImagenUmbralizada= new PanelImagenHistograma(imagenUmbralizada);
         umbralizacion= new Umbralizacion(buffered);
         JPanel panelTop= new JPanel(new GridLayout(3,4));
             panelTop.add(new Label("Primer umbral"));
@@ -102,7 +97,7 @@ public class PanelUmbral extends JPanel {
     public void negativoImagen(){
         if(checkNegativo.isSelected()){
             Image nuevaImagen = umbralizacion.negativoImagen();
-            panelImagenUmbralizada.setPanelLabel(nuevaImagen,new Label("negativo"));
+            panelImagenUmbralizada.setImagen(nuevaImagen);
         }else{
             ajustarUmbral();
         }
@@ -130,7 +125,7 @@ public class PanelUmbral extends JPanel {
         } else {
             imagenUmbralizada = umbralizacion.ajustarUmbral(umbral1, umbral2, umbral3);
         }
-        panelImagenUmbralizada.setPanelLabel(imagenUmbralizada,new Label("Imagen Modificada"));
+        panelImagenUmbralizada.setImagen(imagenUmbralizada);
         
     }
 
@@ -138,8 +133,8 @@ public class PanelUmbral extends JPanel {
         this.imagen=imagen;
         buffered=imageBuffered.getBufferedImage(imagen);
         imagenGrises=imageBuffered.getImage(buffered, 5);
-        panelImagen.setPanelLabel(imagenGrises,new Label ("imagen"));
-        panelImagenUmbralizada.setPanelLabel(imagen,new Label("umbralizada"));
+        panelImagen.setImagen(imagenGrises);
+        panelImagenUmbralizada.setImagen(imagen);
         umbralizacion.setImagen(imagen);
         ajustarUmbral();
     }

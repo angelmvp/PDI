@@ -7,10 +7,6 @@ package vista;
 
 import javax.swing.JFrame;
 import java.awt.Color;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 
 /**

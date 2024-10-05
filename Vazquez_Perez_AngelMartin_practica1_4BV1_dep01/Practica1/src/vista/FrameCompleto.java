@@ -24,7 +24,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import modelo.ImageBufferedImage;
-import modelo.LectorDeImagen;
 
 /**
  *
@@ -38,7 +37,7 @@ public class FrameCompleto extends JFrame{
     private PanelImagen panelImagen;
     private PanelCanales panelCanales;
     private BufferedImage imagen;
-    private ImageBufferedImage buffered;
+    private ImageBufferedImage imageBuffered;
     public FrameCompleto() {
         super("Practica 1");        
         initComponents();
@@ -51,7 +50,7 @@ public class FrameCompleto extends JFrame{
     }
     private void initComponents() {
         seleccionarImagen();
-        buffered = new ImageBufferedImage();
+        imageBuffered = new ImageBufferedImage();
         panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayout(3, 1, 4, 4));
         JButton botonBrillo = new JButton("MODIFICAR BRILLO");
@@ -89,7 +88,7 @@ public class FrameCompleto extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 seleccionarImagen();
-                Image nuevaImagen = buffered.getImage(imagen,4);
+                Image nuevaImagen = imageBuffered.getImage(imagen,4);
                 panelImagen.setImagen(nuevaImagen);
                 actualizarPaneles();
                 }
@@ -97,7 +96,7 @@ public class FrameCompleto extends JFrame{
 
         contenedor.add(botonCargar, BorderLayout.NORTH);
         contenedor.add(panelBotones, BorderLayout.EAST);
-        panelImagen= new PanelImagen(buffered.getImage(imagen,4));
+        panelImagen= new PanelImagen(imageBuffered.getImage(imagen,4));
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new CardLayout());
         panelContraste = new PanelContraste(imagen);

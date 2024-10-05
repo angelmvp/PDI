@@ -13,8 +13,6 @@ import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import modelo.ImageBufferedImage;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 public class PanelContraste extends JPanel {
     private JSlider contraste;

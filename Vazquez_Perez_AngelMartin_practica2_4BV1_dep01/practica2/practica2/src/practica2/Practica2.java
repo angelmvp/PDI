@@ -6,7 +6,6 @@
 package practica2;
 
 import vista.FrameCompleto;
-import vista.FrameHistograma;
 
 /**
  *
