@@ -8,6 +8,7 @@ package vista;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
@@ -41,7 +42,9 @@ public class PanelConversion extends JPanel {
             comboTipoImagen.addItem("YIQ to RGB");
             comboTipoImagen.addItem("LAB to RGB");
 
-            JPanel panelConversionTop = new JPanel(new GridLayout(1,2));
+            JPanel panelConversionTop = new JPanel(new GridLayout(2,2));
+            panelConversionTop.add(new Label("Seleccione Tipo de transformacion"));
+            panelConversionTop.add(new Label("Boton para ejecutar la transformacion"));
             panelConversionTop.add(comboTipoImagen);
             botonConvertir = new JButton("invertir Conversion");
             panelConversionTop.add(botonConvertir);  
