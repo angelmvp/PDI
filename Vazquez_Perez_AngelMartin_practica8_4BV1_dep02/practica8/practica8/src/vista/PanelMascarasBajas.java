@@ -16,6 +16,10 @@ public class PanelMascarasBajas extends JPanel {
     private int filas;
     private final double[][] gauss = {{1, 2, 1}, {2, 8, 2}, {1, 2, 1}};
     private final double[][] promediador = {{1,1,1},{1,1,1},{1,1,1}};
+    private final double[][] suavizador = {{0,0,1,1,1,1,1,0,0},{0,1,1,1,1,1,1,1,0},
+                                {1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},
+                                {1,1,1,1,9,1,1,1,1},{1,1,1,1,1,1,1,1,1},{1,1,1,1,1,1,1,1,1},
+                                {0,0,1,1,1,1,1,0,0},{0,1,1,1,1,1,1,1,0}};
     private final double[][] sobel = {{1, 0, -1}, {2, 0, -2}, {1, 0, -1}};
     private final double[][] freiChen = {{1, 0, -1}, {Math.sqrt(2), 0, -Math.sqrt(2)}, {1, 0, -1}};
     private double[][] matriz;
@@ -24,7 +28,7 @@ public class PanelMascarasBajas extends JPanel {
     private JTextField tamMatriz;
     private JPanel panelMatriz;
     private int alpha;
-
+    private int bias;
     public PanelMascarasBajas() {
         columnas = 3;
         filas = 3;
@@ -40,9 +44,7 @@ public class PanelMascarasBajas extends JPanel {
         comboMascara = new JComboBox<>();
         comboMascara.addItem("gaussiano");
         comboMascara.addItem("promediador");
-        comboMascara.addItem("Sobel");
-        comboMascara.addItem("Frei-Chen");
-        comboMascara.addItem("Canny");
+        comboMascara.addItem("suavizador");
         comboMascara.addItem("Personalizar");
 
         panelMatriz = new JPanel(new GridLayout(filas, columnas));
@@ -93,12 +95,9 @@ public class PanelMascarasBajas extends JPanel {
                 case "promediador":
                     matriz = copiarMatriz(promediador);
                     break;
-                case "Sobel":
-                    matriz = copiarMatriz(sobel);
-                    break;
-                case "Frei-Chen":
-                    matriz = copiarMatriz(freiChen);
-                    break;
+                case "suavizador":
+                    actualizarTamMatricesTexto(9);
+                    matriz=copiarMatriz(suavizador);
             }
         }
 
@@ -111,7 +110,8 @@ public class PanelMascarasBajas extends JPanel {
                 }
             }
         }
-        multiplicarAlpha(matriz, alpha);
+        actualizarBias();
+
     }
 
     public void establecerTam() {
@@ -127,13 +127,23 @@ public class PanelMascarasBajas extends JPanel {
     }
 
     public void setMascaraPersonalizada() {
+        double [][] matriz = new double[filas][columnas];
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
                 matriz[i][j] = Double.parseDouble(valoresMascara[i][j].getText());
             }
         }
+        this.matriz = copiarMatriz(matriz);
     }
-
+    public void actualizarBias(){
+        int suma=0;
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                suma+= matriz[i][j]; 
+            }
+        }
+        bias = suma;
+    }
     public void inicializarMatricesTexto() {
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
@@ -158,15 +168,6 @@ public class PanelMascarasBajas extends JPanel {
         panelMatriz.repaint();
     }
 
-    public void multiplicarAlpha(double[][] matriz, int alpha) {
-        if (alpha != 0) {
-            for (int i = 0; i < filas; i++) {
-                for (int j = 0; j < columnas; j++) {
-                    this.matriz[i][j] = matriz[i][j] / alpha;
-                }
-            }
-        }
-    }
 
     public double[][] copiarMatriz(double[][] original) {
         double[][] copia = new double[original.length][original[0].length];
@@ -179,7 +180,9 @@ public class PanelMascarasBajas extends JPanel {
     }
 
     public void setAlpha(int alpha) {
+        System.out.println(alpha);
         this.alpha = alpha;
+        setMascaraValores();
     }
 
     public double[][] getMascara() {
@@ -192,5 +195,8 @@ public class PanelMascarasBajas extends JPanel {
 
     public String getNombreMascara() {
         return comboMascara.getSelectedItem().toString();
+    }
+    public double getBias(){
+        return bias;
     }
 }

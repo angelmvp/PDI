@@ -38,8 +38,10 @@ public class FrameCompleto extends JFrame{
     private BufferedImage buffered;
     private Image imagen;
     private ImageBufferedImage imageBuffered;
+    private String panelActual;
+    private PanelUmbral panelUmbral;
     public FrameCompleto() {
-        super("Practica 5");        
+        super("Practica 8");        
         initComponents();
       addWindowListener(new WindowAdapter() {
             @Override
@@ -51,22 +53,25 @@ public class FrameCompleto extends JFrame{
     private void initComponents() {
         imageBuffered = new ImageBufferedImage();
         seleccionarImagen();
+        panelActual="pasaAltas";
         panelBotones = new JPanel();
         panelBotones.setLayout(new GridLayout(3, 1, 4, 4));
-        JButton botonModificacion = new JButton("Desplazamiento");
-        botonModificacion.addActionListener(new ActionListener() {
+        JButton botonPasaAltas = new JButton("Pasa Altas");
+        botonPasaAltas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CardLayout card = (CardLayout)panelPrincipal.getLayout();
-                card.show(panelPrincipal, "panel desplazamiento");
+                card.show(panelPrincipal, "panel pasa altas");
+                panelActual="pasaAltas";
             }
         });
-        JButton botonEcualizacion = new JButton("Equalizacion");
-        botonEcualizacion.addActionListener(new ActionListener() {
+        JButton botonPasaBajas = new JButton("Pasa Bajas");
+        botonPasaBajas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 CardLayout card = (CardLayout)panelPrincipal.getLayout();
                 card.show(panelPrincipal, "panel pasa bajas");
+                panelActual="pasaBajas";
             }
         });
         JButton botonRelacionales = new JButton("Operaciones RElacionales");
@@ -79,15 +84,15 @@ public class FrameCompleto extends JFrame{
         });
         Container contenedor = this.getContentPane();
         contenedor.setLayout(new BorderLayout());
-        panelBotones.add(botonModificacion);
-        panelBotones.add(botonEcualizacion);
+        panelBotones.add(botonPasaAltas);
+        panelBotones.add(botonPasaBajas);
 
         contenedor.add(panelBotones, BorderLayout.EAST);
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new CardLayout());
         panelPasaAltas = new PanelPasaAltas(imagen);
         panelPasaBajas= new PanelPasaBajas(imagen);
-        panelPrincipal.add(panelPasaAltas, "panel desplazamiento");
+        panelPrincipal.add(panelPasaAltas, "panel pasa altas");
         panelPrincipal.add(panelPasaBajas, "panel pasa bajas");
         //panelPrincipal.add(panelRelacionales, "panel relacionales");
         contenedor.add(panelPrincipal, BorderLayout.CENTER);
@@ -103,6 +108,14 @@ public class FrameCompleto extends JFrame{
         JPanel panelSeleccion = new JPanel(new GridLayout(1,2));
         panelSeleccion.add(botonCargar);
         contenedor.add(panelSeleccion,BorderLayout.NORTH);
+        JButton botonBinarizar = new JButton("Aplicar binarizacion");
+        contenedor.add(botonBinarizar, BorderLayout.SOUTH);
+        botonBinarizar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                crearPanelBinarizacion();
+            }
+        });
         setSize(1200, 700);
         setLocation(22, 22);
         setVisible(true);
@@ -121,6 +134,20 @@ public class FrameCompleto extends JFrame{
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, "Error al cargar la imagen", "Error", JOptionPane.ERROR_MESSAGE);
             }
+        }
+    }
+    public void crearPanelBinarizacion(){
+        System.out.println(panelActual);
+        if(panelActual=="pasaBajas"){
+            System.out.println("se creo pasabajas");
+            panelUmbral= new PanelUmbral(panelPasaBajas.getImagenFiltrada());
+            new FrameUmbral(panelUmbral);
+        }else if (panelActual=="pasaAltas"){
+            System.out.println("se creo pasa altas");
+            panelUmbral=new PanelUmbral (panelPasaAltas.getImagenFiltrada());
+            new FrameUmbral(panelUmbral);
+        }else{
+            return;
         }
     }
     private void actualizarPaneles(){

@@ -107,7 +107,7 @@ public class PanelPasaAltas extends JPanel {
         //String nombre=panelMascaras.getNombreMascara();
         //if(nombre!="Frei-Chen"){selector=1;}
         //System.out.println(imagenInt[100][100]);
-        Image nuevaImagen =convolucion.getImageConvolucion(mascara, 
+        Image nuevaImagen =convolucion.getImageConvolucionDouble(mascara, 
                 panelMascarasAltas.getTam(), matrizInt, 1);
         return nuevaImagen;
     }
@@ -115,6 +115,7 @@ public class PanelPasaAltas extends JPanel {
         System.out.println("ldkajfldaksj");
     }
     public void setImagenFiltrada(Image nuevaImagen){
+        imagenFiltrada=nuevaImagen;
         panelImagenFiltrada.setImagen(nuevaImagen);
     }
     public void setImagen(Image imagen){
@@ -123,5 +124,8 @@ public class PanelPasaAltas extends JPanel {
         imagenGrises=imageBuffered.getImage(buffered, 5);
         panelImagen.setImagen(imagenGrises);
         panelImagenFiltrada.setImagen(imagen);
+    }
+    public Image getImagenFiltrada(){
+        return imagenFiltrada;
     }
 }

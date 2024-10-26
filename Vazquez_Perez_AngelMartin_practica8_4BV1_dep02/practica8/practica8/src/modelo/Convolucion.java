@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -37,7 +37,7 @@ public class Convolucion {
     /**
      * Bias de la mascara con que se realiza el proceso de convolucion.
      */
-    private final double Dbias;
+    private double Dbias;
     private ImageBufferedImage imageBuffered;
     public Convolucion(double Dbias) {
         alto = 0;
@@ -58,10 +58,11 @@ public class Convolucion {
      * @return devuelve la imagen convolucionada en un arreglo entero de dos
      * dimensiones
      */
-    public int[][] calcularConvolucion(int[][] mask, int tam, int[][] imagen,
+        public int[][] calcularConvolucion(int[][] mask, int tam, int[][] imagen,
             int sel) {
         alto = imagen.length;
         ancho = imagen[0].length;
+            System.out.println("Dbias en entero" + Dbias );
         try {
             int[] msk = new int[tam * tam];
             double[][] matCon = new double[alto][ancho];
@@ -93,10 +94,12 @@ public class Convolucion {
         }
         return imagen;
     }
+
     public int[][] calcularConvolucion(double[][] mask, int tam, int[][] imagen,
             int sel) {
-        alto = imagen.length;
+        alto = imagen.length;   
         ancho = imagen[0].length;
+            System.out.println("DBias en double convolucion : " + Dbias);
         try {
             double[] msk = new double[tam * tam];
             double[][] matCon = new double[alto][ancho];
@@ -108,6 +111,7 @@ public class Convolucion {
                     }
                 for (int x=0; x<ancho; x++) {
                     subImg = asignarImagen(imagen, x, y, tam);
+                    
                     matCon[y][x] = Dbias * convolucionar(msk, subImg, tam);
                     }
                 }
@@ -320,7 +324,7 @@ public class Convolucion {
         }
         return matriz;
     }
-    public Image getImageConvolucion(double[][] mask, int tam, int[][] imagen,
+    public Image getImageConvolucionInt(int[][] mask, int tam, int[][] imagen,
             int sel){
             int[][] imagenInt=this.calcularConvolucion(mask, tam, imagen, sel);
                 JFrame padre = new JFrame();
@@ -330,5 +334,19 @@ public class Convolucion {
                 0, ancho));
         
         return imagenNueva;
+    }
+    public Image getImageConvolucionDouble(double[][] mask, int tam, int[][] imagen,
+            int sel){
+            int[][] imagenInt=this.calcularConvolucion(mask, tam, imagen, sel);
+                JFrame padre = new JFrame();
+                Image imagenNueva;
+                imagenNueva = padre.createImage(new MemoryImageSource(ancho,
+                alto, imageBuffered.convertirInt2DAInt1D(imagenInt, ancho, alto),
+                0, ancho));
+        
+        return imagenNueva;
+    }
+    public void setBias(double bias){
+        this.Dbias=bias;
     }
 }

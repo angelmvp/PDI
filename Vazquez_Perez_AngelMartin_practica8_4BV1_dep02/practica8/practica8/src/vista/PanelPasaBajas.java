@@ -20,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import modelo.Aritmeticas;
 import modelo.Convolucion;
 import modelo.ImageBufferedImage;
@@ -48,6 +50,8 @@ public class PanelPasaBajas extends JPanel {
     private int selector;
     private JTextField alpha;
     private int valorAlpha;
+    private JSlider sliderAlpha;
+    private double bias;
     public PanelPasaBajas(Image imagen){
         this.imagen=imagen;
         this.imagenFiltrada=imagen;
@@ -67,15 +71,26 @@ public class PanelPasaBajas extends JPanel {
         JPanel panelTop= new JPanel(new GridLayout(1,4));
         panelTop.add(new JLabel("Panel Pasa Bajas"));
         botonAplicar = new JButton("aplicar Filtro");
-        botonAplicar.addActionListener(e->convolucionarImagen(imageBuffered.getMatrizImagen(buffered,5)));
+        botonAplicar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                convolucionarImagen(imageBuffered.getMatrizImagen(buffered,5));
+                alpha.setText( "Bias: " + String.format("%.2f", obtenerBias()));
+            }
+        });
         panelTop.add(botonAplicar);
+        sliderAlpha = new JSlider(0,50,1);
+        sliderAlpha.setMajorTickSpacing(50);
+        sliderAlpha.setPaintTicks(true);
+        sliderAlpha.setPaintLabels(true);
         JPanel panelDerecha= new JPanel(new GridLayout(2,1));
                 panelMascarasBajas = new PanelMascarasBajas();
                 panelDerecha.add(panelMascarasBajas);
                 JPanel panelDerechaBottom= new JPanel(new GridLayout(4,2));
                     alpha= new JTextField();
-                    alpha.setText("1");
-                    panelDerechaBottom.add(new JLabel("introduzca el valor de alpha para la intensidad de filtrado "));
+                    alpha.setText( "Bias: " + String.format("%.2f", obtenerBias()));
+                    //panelDerechaBottom.add(new JLabel("introduzca el valor de alpha para la intensidad de filtrado "));
+                    //panelDerechaBottom.add(sliderAlpha);
                     panelDerechaBottom.add(alpha);
                     
                 panelDerecha.add(panelDerechaBottom);
@@ -90,25 +105,39 @@ public class PanelPasaBajas extends JPanel {
 
     }
     public void convolucionarImagen(int [][] imagenInt){
-        valorAlpha= Integer.parseInt(alpha.getText());
-        System.out.println(valorAlpha);
+        valorAlpha= sliderAlpha.getValue();
         if(valorAlpha>0){
            panelMascarasBajas.setAlpha(valorAlpha);
         }
 
         setImagenFiltrada(convolucion(panelMascarasBajas.getMascara(),imagenInt));
+        //System.out.println(panelMascarasBajas.getMascara()[2][2]);
     }
     
     public Image convolucion(double [][] mascara,int[][] matrizInt){
-        selector=2;
-        //String nombre=panelMascaras.getNombreMascara();
-        //if(nombre!="Frei-Chen"){selector=1;}
-        //System.out.println(imagenInt[100][100]);
-        Image nuevaImagen =convolucion.getImageConvolucion(mascara, 
-                panelMascarasBajas.getTam(), matrizInt, 1);
+        selector=1;
+        double bias = obtenerBias();
+        convolucion.setBias(bias);
+        alpha.setText( "Bias: " + String.format("%.2f", obtenerBias()));
+        Image nuevaImagen =convolucion.getImageConvolucionInt(mascaradobuletoint(mascara), 
+                panelMascarasBajas.getTam(), matrizInt, selector);
         return nuevaImagen;
     }
+    public int[][] mascaradobuletoint(double[][] mascara){
+        int[][] nuevaMascara= new int[mascara.length][mascara[0].length];
+        for(int i=0; i<mascara.length;i++){
+            for(int j=0;j<mascara[0].length;j++){
+                nuevaMascara[i][j] = (int)mascara[i][j];
+            }
+        }
+        return nuevaMascara;
+    }
+    public double obtenerBias(){
+        double bias = 1/panelMascarasBajas.getBias();
+        return bias;
+    }
     public void setImagenFiltrada(Image nuevaImagen){
+        imagenFiltrada=nuevaImagen;
         panelImagenFiltrada.setImagen(nuevaImagen);
     }
     public void setImagen(Image imagen){
@@ -117,5 +146,8 @@ public class PanelPasaBajas extends JPanel {
         imagenGrises=imageBuffered.getImage(buffered, 5);
         panelImagen.setImagen(imagenGrises);
         panelImagenFiltrada.setImagen(imagen);
+    }
+    public Image getImagenFiltrada(){
+        return imagenFiltrada;
     }
 }

@@ -12,7 +12,7 @@ import vista.FrameCompleto;
  * @author jhona
  */
 public class Practica8 {
-
+    
     /**
      * @param args the command line arguments
      */
