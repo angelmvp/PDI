@@ -151,9 +151,8 @@ public class FrameCompleto extends JFrame{
         }
     }
     private void actualizarPaneles(){
-        //panelEcualizacion.setImagen(imagen);
-        //panelLogicas.setImagenes(imagen1,imagen2);
-        //panelRelacionales.setImagenes(imagen1,imagen2);
+        panelPasaBajas.setImagen(imagen);
+        panelPasaAltas.setImagen(imagen);
         
     }
 }

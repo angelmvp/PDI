@@ -134,6 +134,7 @@ public class PanelMascarasBajas extends JPanel {
             }
         }
         this.matriz = copiarMatriz(matriz);
+        actualizarBias();
     }
     public void actualizarBias(){
         int suma=0;
