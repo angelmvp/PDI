@@ -22,6 +22,7 @@ public class FiltrosNoLineales {
     private int ancho;
     private ImageBufferedImage imageBuffered;
     private int tamMascara;
+    private String tipoMascara;
 //    private int[][] matrizAlfaTrimmed[][];
 //    private int[][] matrizMediana[][];
 //    private int[][] matrizMaximo[][];
@@ -38,12 +39,18 @@ public class FiltrosNoLineales {
         this.imagenInt=imagenInt;
         this.tamMascara=tamMascara;
         imageBuffered = new ImageBufferedImage();
+        tipoMascara="cruz";
         initComponents();
     }
     public void initComponents(){
         alto=imagenInt.length;
         ancho=imagenInt[0].length;
         copiaMatriz=imagenInt.clone();
+//        System.out.println(copiaMatriz[150][150]);
+//        System.out.println(copiaMatriz[151][151]);
+//        System.out.println(copiaMatriz[149][149]);
+//        System.out.println(copiaMatriz[149][151]);
+//        System.out.println(copiaMatriz[151][149]);
     }
     public Image aplicarFiltrodeAlfaTrimmed(int p){
         int[][] nuevaMatriz= new int[alto][ancho];
@@ -166,7 +173,7 @@ public class FiltrosNoLineales {
         int[] ventana=obtenerVentana(x,y);
         double suma = 0;
         int contador=0;
-        for(int i=0;i<tamMascara;i++){
+        for(int i=0;i<ventana.length;i++){
             if(ventana[i]!=0){
                 suma+=1.0/(ventana[i]);
                 contador++;
@@ -201,7 +208,6 @@ public class FiltrosNoLineales {
             suma2+=Math.pow(ventana[i], p);
         }
         if (suma2==0){
-            System.out.println(suma2);
             return 255;
         }
         return suma1/suma2;
@@ -223,7 +229,7 @@ public class FiltrosNoLineales {
     public int obtenerInferiorGeometrico(int x,int y){
         int[] ventana=obtenerVentana(x,y);
         double multiplicatorio=1;
-        double inversa = 1.0/(tamMascara*tamMascara);
+        double inversa = 1.0/(ventana.length);
         for(int i=0;i<ventana.length;i++){
             multiplicatorio*=ventana[i];
         }
@@ -279,11 +285,31 @@ public class FiltrosNoLineales {
         for(int i=0;i<ventana.length;i++){
             suma+=ventana[i];
         }
-        return suma/(tamMascara*tamMascara);
+        return suma/(ventana.length);
     }
     
     
     private int[] obtenerVentana(int x, int y) {
+        switch(tipoMascara){
+                case "cuadrada":
+                    return obtenerVentanaCuadrada(x,y);
+                case "horizontal":
+                    return obtenerVentanaHorizontal(x,y);
+                case "vertical":
+                    return obtenerVentanaVertical(x,y);
+                    
+                case "cruz":
+                    return obtenerVentanaCruz(x,y);
+                    
+                case "equis":
+                    return obtenerVentanaEquis(x,y);
+                    
+                case "diamante":
+                    return obtenerVentanaDiamante(x,y);
+        }
+        return null;
+    }
+    private int[] obtenerVentanaCuadrada(int x, int y) {
         int mitad = tamMascara / 2;
         int[] ventana = new int[tamMascara * tamMascara];
         int index = 0;
@@ -296,14 +322,123 @@ public class FiltrosNoLineales {
         }
         return ventana;
     }
+    private int[] obtenerVentanaHorizontal(int x, int y) {
+        int mitad = tamMascara / 2;
+        int[] ventana = new int[tamMascara];
+        int index = 0;
+        for (int i = -mitad; i <= mitad; i++) {
+                int posX = Math.min(Math.max(x + i, 0), ancho - 1);
+                ventana[index++] = copiaMatriz[y][posX];
+        }
+        return ventana;
+    }
+    private int[] obtenerVentanaVertical(int x, int y) {
+        int mitad = tamMascara / 2;
+        int[] ventana = new int[tamMascara];
+        int index = 0;
+        for (int i = -mitad; i <= mitad; i++) {
+                int posY = Math.min(Math.max(y + i, 0), alto - 1);
+                ventana[index++] = copiaMatriz[posY][x];
+        }
+        return ventana;
+    }
+    private int[] obtenerVentanaCruz(int x, int y) {
+        int mitad= tamMascara/2;
+        int[] ventana= new int[tamMascara*2-1];
+        int[] horizontal = obtenerVentanaHorizontal(x,y);
+        int[] vertical = obtenerVentanaVertical(x,y);
+        for (int i = 0; i < tamMascara; i++) { 
+            ventana[i]=horizontal[i];
+        }
+        ventana[mitad]=vertical[0];
+        int index=1;
+        for (int i = tamMascara; i < tamMascara*2-1; i++) { 
+            ventana[i]=vertical[index];
+            index++;
+        } 
+        return ventana;
+    }
+    private int[] obtenerVentanaEquis(int x, int y) {
+        int mitad = tamMascara / 2;
+        int[] ventana = new int[tamMascara * 2 - 1]; // Ajustamos el tamaño para evitar un índice extra
+        int index = 0;
+
+        for (int i = -mitad; i <= mitad; i++) {
+            int posX1 = Math.min(Math.max(x + i, 0), ancho - 1);
+            int posY1 = Math.min(Math.max(y + i, 0), alto - 1);
+
+            int posX2 = Math.min(Math.max(x - i, 0), ancho - 1);
+            int posY2 = Math.min(Math.max(y + i, 0), alto - 1);
+
+            if(index+1==ventana.length){
+                break;
+            }
+            if (index < ventana.length) { 
+                ventana[index++] = copiaMatriz[posY1][posX1];
+            }
+            if (i != 0 && index < ventana.length) {
+                ventana[index++] = copiaMatriz[posY2][posX2];
+            }
+        }
+        return ventana;
+    }
+    private int[] obtenerVentanaEquis(int x, int y,int tam) {
+        int mitad = tam / 2;
+        int[] ventana = new int[tam * 2 - 1]; // Ajustamos el tamaño para evitar un índice extra
+        int index = 0;
+
+        for (int i = -mitad; i <= mitad; i++) {
+            int posX1 = Math.min(Math.max(x + i, 0), ancho - 1);
+            int posY1 = Math.min(Math.max(y + i, 0), alto - 1);
+
+            int posX2 = Math.min(Math.max(x - i, 0), ancho - 1);
+            int posY2 = Math.min(Math.max(y + i, 0), alto - 1);
+
+            if(index+1==ventana.length){
+                break;
+            }
+            if (index < ventana.length) { 
+                ventana[index++] = copiaMatriz[posY1][posX1];
+            }
+            if (i != 0 && index < ventana.length) {
+                ventana[index++] = copiaMatriz[posY2][posX2];
+            }
+        }
+        return ventana;
+    }
+
+
+    private int[] obtenerVentanaDiamante(int x, int y) {
+        int mitad = tamMascara / 2;
+        int[] cruz = obtenerVentanaCruz(x,y);
+        int[] equis = obtenerVentanaEquis(x,y,tamMascara-2);
+        int[] ventana = new int[cruz.length+equis.length-1]; 
+        for(int i=0; i<equis.length;i++){
+            ventana[i]=equis[i];
+        }
+        ventana[mitad]=cruz[0];
+        int index=1;
+        for(int i=equis.length;i<cruz.length+equis.length-1;i++){
+            ventana[i]=cruz[index];
+            index++;
+        }
+        return ventana;
+    }
+
+
     private int validar(int n){
         return Math.min(255, Math.max(0, n));
     }
     private Image generarImagenDesdeMatriz(int[][] matriz) {
         JFrame padre = new JFrame();
-        System.out.println(matriz[100][100]);
         return padre.createImage(new MemoryImageSource(ancho, alto, 
                 imageBuffered.convertirInt2DAInt1D(matriz, ancho, alto), 0, ancho));
+    }
+    public void setTipoMascara(String tipoMascara){
+        this.tipoMascara=tipoMascara;
+    }
+    public void setTamMascara(int tam){
+        this.tamMascara=tam;
     }
     public void setMatrizImagen(int[][] imagenInt){
         this.imagenInt=imagenInt;

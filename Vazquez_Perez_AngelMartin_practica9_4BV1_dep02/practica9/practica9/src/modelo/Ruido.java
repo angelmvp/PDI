@@ -34,8 +34,8 @@ public class Ruido {
 
         for (int y = 0; y < alto; y++) {
             for (int x = 0; x < ancho; x++) {
-                int noise = (int) (Math.sin(u0*x + y0*y) * 150);
-                int gris = matrizImagen[y][x] + noise;
+                int ruido = (int) (Math.sin(u0*x + y0*y) * 150);
+                int gris = matrizImagen[y][x] + ruido;
                 gris = Math.min(255, Math.max(0, gris));
                 Color color = new Color(gris, gris, gris);
                 nuevaMatriz[y][x] = color.getRGB();
@@ -68,8 +68,8 @@ public class Ruido {
 
         for (int y = 0; y < alto; y++) {
             for (int x = 0; x < ancho; x++) {
-                int noise = (int) (random.nextGaussian() * varianza + media);
-                int gris = matrizImagen[y][x] + noise;
+                int ruido = (int) (random.nextGaussian() * varianza + media);
+                int gris = matrizImagen[y][x] + ruido;
                 gris = Math.min(255, Math.max(0, gris));
                 Color color = new Color(gris, gris, gris);
                 nuevaMatriz[y][x] = color.getRGB();
@@ -85,8 +85,8 @@ public class Ruido {
 
         for (int y = 0; y < alto; y++) {
             for (int x = 0; x < ancho; x++) {
-                int noise = (int) (-Math.log(1 - random.nextDouble()) / varianza * 50);
-                int gris = matrizImagen[y][x] + noise;
+                int ruido = (int) (-Math.log(1 - random.nextDouble()) / varianza * 50);
+                int gris = matrizImagen[y][x] + ruido;
                 gris = Math.min(255, Math.max(0, gris));
                 Color color = new Color(gris, gris, gris);
                 nuevaMatriz[y][x] = color.getRGB();
@@ -101,8 +101,8 @@ public class Ruido {
 
         for (int y = 0; y < alto; y++) {
             for (int x = 0; x < ancho; x++) {
-                int noise = (int) (sigma * Math.sqrt(-2 * Math.log(1 - random.nextDouble())));
-                int gris = matrizImagen[y][x] + noise;
+                int ruido = (int) (sigma * Math.sqrt(-2 * Math.log(1 - random.nextDouble())));
+                int gris = matrizImagen[y][x] + ruido;
                 gris = Math.min(255, Math.max(0, gris));
                 Color color = new Color(gris, gris, gris);
                 nuevaMatriz[y][x] = color.getRGB();
@@ -114,7 +114,7 @@ public class Ruido {
     public Image aplicarRuidoSalyPimienta() {
         int[][] nuevaMatriz = new int[alto][ancho];
         Random random = new Random();
-        double probability = 0.04;
+        double probability = 0.02;
 
         for (int y = 0; y < alto; y++) {
             for (int x = 0; x < ancho; x++) {
@@ -135,8 +135,8 @@ public class Ruido {
 
         for (int y = 0; y < alto; y++) {
             for (int x = 0; x < ancho; x++) {
-                int noise = random.nextInt(max - min + 1) + min;
-                int gris = matrizImagen[y][x] + noise;
+                int ruido = random.nextInt(max - min + 1) + min;
+                int gris = matrizImagen[y][x] + ruido;
                 gris = Math.min(255, Math.max(0, gris));
                 Color color = new Color(gris, gris, gris);
                 nuevaMatriz[y][x] = color.getRGB();

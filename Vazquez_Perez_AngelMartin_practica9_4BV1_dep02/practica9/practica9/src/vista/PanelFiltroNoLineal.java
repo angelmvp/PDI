@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
@@ -42,6 +43,9 @@ public class PanelFiltroNoLineal extends JPanel {
     private JTextField textoP;
     private Label instruccionesP;
     private JPanel panelOpcional;
+    private JComboBox<String> comboTipoMascara;
+    private JTextField textoTamMascara;
+    private JButton botonAplicarTam;
     public PanelFiltroNoLineal(Image imagen){
         this.imagen=imagen;
         this.imagenFiltrada=imagen;
@@ -68,9 +72,26 @@ public class PanelFiltroNoLineal extends JPanel {
         comboFiltro.addItem("Filtro maximo-minimo");
         comboFiltro.addItem("Filtro de la media aritmetica");
         comboFiltro.addItem("Filtro de Alfa Trimmed");
-        JPanel panelTop= new JPanel(new GridLayout(1,4));
-            panelTop.add(new JLabel("Panel De filtro No lineales "));
+        
+        comboTipoMascara= new JComboBox<>();
+        comboTipoMascara.addItem("cuadrada");
+        comboTipoMascara.addItem("horizontal");
+        comboTipoMascara.addItem("vertical");
+        comboTipoMascara.addItem("cruz");
+        comboTipoMascara.addItem("diamante");
+        comboTipoMascara.addItem("equis");
+        
+        JPanel panelTop= new JPanel(new GridLayout(1,5));
+                JPanel panelTamMascara = new JPanel(new BorderLayout());
+                textoTamMascara= new JTextField();
+                textoTamMascara.setText("3");
+                panelTamMascara.add(new Label("Tamaño de MAscara"),BorderLayout.NORTH);
+                botonAplicarTam= new JButton("aplicar Tamaño");
+                panelTamMascara.add(textoTamMascara,BorderLayout.CENTER);
+                panelTamMascara.add(botonAplicarTam,BorderLayout.EAST);
+            panelTop.add(panelTamMascara);
             panelTop.add(comboFiltro);
+            panelTop.add(comboTipoMascara);
             botonAplicar = new JButton("aplicar Filtro");
             botonAplicar.addActionListener(new ActionListener(){
                 @Override
@@ -107,7 +128,20 @@ public class PanelFiltroNoLineal extends JPanel {
                 }
             }
         });
-
+        comboTipoMascara.addItemListener(new ItemListener(){
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                cambiarTipoMascara();
+            }
+        }
+        );
+        botonAplicarTam.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cambiarMascaraTam();
+            }
+        }
+        );
         panelTop.add(panelOpcional);
         JPanel panelCentro= new JPanel(new GridLayout(1,2));
             panelCentro.add(panelImagen);
@@ -163,7 +197,18 @@ public class PanelFiltroNoLineal extends JPanel {
         }
         panelImagenFiltrada.setImagen(nuevaImagen);
     }
-
+    public void cambiarTipoMascara(){
+        String mascaraElegida = (String)comboTipoMascara.getSelectedItem();
+        filtrosNoLineales.setTipoMascara(mascaraElegida);
+    }
+    public void cambiarMascaraTam(){
+        int nuevoTam= Integer.parseInt(textoTamMascara.getText());
+        if(nuevoTam%2==0){
+            JOptionPane.showMessageDialog(null, "el tamaño no puede ser par");
+            return;
+        }
+        filtrosNoLineales.setTamMascara(nuevoTam);
+    }
     public void setImagen(Image imagen){
         this.imagen=imagen;
         buffered= imageBuffered.getBufferedImageColor(imagen);
