@@ -16,12 +16,9 @@ import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
 import javax.swing.JTextField;
-import modelo.Convolucion;
 import modelo.FiltrosNoLineales;
 import modelo.ImageBufferedImage;
 

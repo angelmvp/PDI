@@ -15,7 +15,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -24,7 +23,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import modelo.ImageBufferedImage;
 import modelo.Ruido;
-import modelo.Umbralizacion;
 
 /**
  *
@@ -83,12 +81,12 @@ public class PanelRuido extends JPanel {
                 texto1.setVisible(true);
                 texto2=new JTextField("2");
                 texto2.setVisible(true);
-                slider1 = new JSlider(0, 90, 1);
-                slider1.setMajorTickSpacing(30);
+                slider1 = new JSlider(-180, 180, 0);
+                slider1.setMajorTickSpacing(60);
                 slider1.setPaintTicks(true);
                 slider1.setPaintLabels(true);
-                slider2 = new JSlider(0, 90, 1);
-                slider2.setMajorTickSpacing(30);
+                slider2 = new JSlider(-180, 180, 1);
+                slider2.setMajorTickSpacing(60);
                 slider2.setPaintTicks(true);
                 slider2.setPaintLabels(true);
                 panelOpcional.add(instrucciones1);
@@ -117,14 +115,21 @@ public class PanelRuido extends JPanel {
                     if ("Ruido Coherente".equals(ruidoSeleccionado) ) {
                         instrucciones1.setText("valor xo");
                         instrucciones2.setText("valor yo");
+                        slider1.setMaximum(180);
+                        slider1.setMinimum(-180);
+                        slider1.setMajorTickSpacing(50);
+                        slider2.setMaximum(180);
+                        slider2.setMinimum(-180);
                         cambiarOpcional1(true);
                         cambiarOpcional2(true);
                     } else if ("Ruido Gaussiano".equals(ruidoSeleccionado)){
                         instrucciones1.setText("varianza");
                         instrucciones2.setText("media");
                         slider1.setMaximum(200);
-                        slider1.setMajorTickSpacing(100);
+                        slider1.setMinimum(0);
+                        slider1.setMajorTickSpacing(50);
                         slider2.setMaximum(10);
+                        slider2.setMinimum(0);
                         slider2.setMajorTickSpacing(2);
                         cambiarOpcional1(true);
                         cambiarOpcional2(true);
@@ -145,6 +150,12 @@ public class PanelRuido extends JPanel {
                         cambiarOpcional1(true);
                         cambiarOpcional2(false);
                     }else{
+                        slider1.setMaximum(200);
+                        slider1.setMinimum(0);
+                        slider1.setMajorTickSpacing(50);
+                        slider2.setMaximum(200);
+                        slider2.setMinimum(0);
+                        slider2.setMajorTickSpacing(50);
                         cambiarOpcional1(true);
                         cambiarOpcional2(false);
                     }

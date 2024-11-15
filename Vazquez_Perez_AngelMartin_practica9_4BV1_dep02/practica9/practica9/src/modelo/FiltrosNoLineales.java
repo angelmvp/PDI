@@ -23,16 +23,6 @@ public class FiltrosNoLineales {
     private ImageBufferedImage imageBuffered;
     private int tamMascara;
     private String tipoMascara;
-//    private int[][] matrizAlfaTrimmed[][];
-//    private int[][] matrizMediana[][];
-//    private int[][] matrizMaximo[][];
-//    private int[][] matrizMinimo[][];
-//    private int[][] matrizMaximoMinimo[][];
-//    private int[][] matrizPuntoMedio[][];
-//    private int[][] matrizInferiorArmonico[][];
-//    private int[][] matrizInferiorContraArmonico[][];
-//    private int[][] matrizMediaAritmetica[][];
-//    private int[][] matrizInferiorGeometrico[][];
     
     
     public FiltrosNoLineales(int[][] imagenInt,int tamMascara){
@@ -46,11 +36,6 @@ public class FiltrosNoLineales {
         alto=imagenInt.length;
         ancho=imagenInt[0].length;
         copiaMatriz=imagenInt.clone();
-//        System.out.println(copiaMatriz[150][150]);
-//        System.out.println(copiaMatriz[151][151]);
-//        System.out.println(copiaMatriz[149][149]);
-//        System.out.println(copiaMatriz[149][151]);
-//        System.out.println(copiaMatriz[151][149]);
     }
     public Image aplicarFiltrodeAlfaTrimmed(int p){
         int[][] nuevaMatriz= new int[alto][ancho];
@@ -183,7 +168,7 @@ public class FiltrosNoLineales {
         if(contador==0){
             return 0;
         }
-        return (int)(5/ suma);
+        return (int)(contador/ suma);
     }
 
     public Image aplicarFiltroInferiorContraArmonico(double valorP) {
@@ -297,13 +282,10 @@ public class FiltrosNoLineales {
                     return obtenerVentanaHorizontal(x,y);
                 case "vertical":
                     return obtenerVentanaVertical(x,y);
-                    
                 case "cruz":
                     return obtenerVentanaCruz(x,y);
-                    
                 case "equis":
                     return obtenerVentanaEquis(x,y);
-                    
                 case "diamante":
                     return obtenerVentanaDiamante(x,y);
         }
