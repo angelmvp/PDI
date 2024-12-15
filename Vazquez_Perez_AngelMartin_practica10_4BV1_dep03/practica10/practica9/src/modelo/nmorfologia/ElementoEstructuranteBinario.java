@@ -16,13 +16,6 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.Writer;
 
-
-/**
- * Un elemento estructurante para procesar imagenes binarias.
- *
- * @author yo
- * @version 2.0 (2023/07/21) [1999/08/30]
- */
 public final class ElementoEstructuranteBinario extends ElementoEstructurante 
         implements Cloneable, TipoElementoEstructurante {
     /**
@@ -64,151 +57,140 @@ public final class ElementoEstructuranteBinario extends ElementoEstructurante
         super(w, h, p);
         setPixels();
     }
-
-    /**
-     * Crea una instancia de un objeto estandas BinaryStructElement, uno de los
-     * tipos estan definidos en la interface MorphologicalConstants.
-     *
-     * @param type tipo entero que especifica al SE
-     * @throws ElementoEstructuranteException si un parametro definido es no 
-     * valido.
-     * @see TipoElementoEstructurante
-     */
-    public ElementoEstructuranteBinario(int type) 
+public ElementoEstructuranteBinario(String type) 
             throws ElementoEstructuranteException {
         // Pone las dimensiones del SE
         switch (type) {
-            case SQ_3x3:
-            case CROSS_3x3:
-            case LIN_HOR_3x3:
-            case LIN_VER_3x3:
-            case MORE_3x3:
+            case "SQ_3x3":
+            case "CROSS_3x3":
+            case "LIN_HOR_3x3":
+            case "LIN_VER_3x3":
+            case "MORE_3x3":
                 width = height = 3;
                 origin = new Point(1, 1);
                 pixel = new int[3][3];
                 break;
-            case SQ_5x5:
-            case CROSS_5x5:
-            case DIAMOND_5x5:
-            case DISK_5x5:
-            case MORE_5x5:
+            case "SQ_5x5":
+            case "CROSS_5x5":
+            case "DIAMOND_5x5":
+            case "DISK_5x5":
+            case "MORE_5x5":
                 width = height = 5;
                 origin = new Point(2, 2);
                 pixel = new int[5][5];
                 break;
-            case SQ_7x7:
-            case DIAMOND_7x7:
-            case DISK_7x7:
-            case MORE_7x7:
+            case "SQ_7x7":
+            case "DIAMOND_7x7":
+            case "DISK_7x7":
+            case "MORE_7x7":
                 width = height = 7;
                 origin = new Point(3, 3);
                 pixel = new int[7][7];
                 break;
-            case SQ_9x9:
-            case DIAMOND_9x9:
-            case DISK_9x9:
-            case MORE_9x9:
+            case "SQ_9x9":
+            case "DIAMOND_9x9":
+            case "DISK_9x9":
+            case "MORE_9x9":
                 width = height = 9;
                 origin = new Point(4, 4);
                 pixel = new int[9][9];
                 break;
-            case SQ_11x11:
-            case DIAMOND_11x11:
-            case DISK_11x11:
-            case MORE_11x11:
+            case "SQ_11x11":
+            case "DIAMOND_11x11":
+            case "DISK_11x11":
+            case "MORE_11x11":
                 width = height = 11;
                 origin = new Point(5, 5);
                 pixel = new int[11][11];
                 break;
             default:
-                throw new ElementoEstructuranteException(
-                        "tipo de elemento estructurante no valido");
+                System.out.println("ñao ñao");
             }
 
         // Define SE values
         switch (type) {
-            case LIN_VER_3x3:
+            case "LIN_VER_3x3":
                 setPixels("010010010");
-            case LIN_HOR_3x3:
+            case "LIN_HOR_3x3":
                 setPixels("000111000");
-            case SQ_3x3:
+            case "SQ_3x3":
                 setPixels("111111111");
                 break;
-            case CROSS_3x3:
+            case "CROSS_3x3":
                 setPixels("010111010");
                 break;
-            case MORE_3x3:
+            case "MORE_3x3":
                 setPixels("010111010");
                 break;
-            case SQ_5x5:
+            case "SQ_5x5":
                 setPixels("1111111111111111111111111");
                 break;
-            case CROSS_5x5:
+            case "CROSS_5x5":
                 setPixels("0010000100111110010000100");
                 break;
-            case DIAMOND_5x5:
+            case "DIAMOND_5x5":
                 setPixels("0010001110111110111000100");
                 break;
-            case DISK_5x5:
+            case "DISK_5x5":
                 setPixels("0111011111111111111101110");
                 break;
-            case MORE_5x5:
+            case "MORE_5x5":
                 setPixels("0010000100111110010000100");
                 break;
-            case SQ_7x7:
+            case "SQ_7x7":
                 setPixels("1111111111111111111111111111111111111111111111111");
                 break;
-            case DIAMOND_7x7:
+            case "DIAMOND_7x7":
                 setPixels("0001000001110001111101111111011111000111000001000");
                 break;
-            case DISK_7x7:
+            case "DISK_7x7":
                 setPixels("0011100011111011111111111111111111101111100011100");
                 break;
-            case MORE_7x7:
+            case "MORE_7x7":
                 setPixels("0001000000100000010001111111000100000010000001000");
                 break;
-            case SQ_9x9:
+            case "SQ_9x9":
                 setPixels("111111111111111111111111111111111111" +
                           "111111111" +
                           "111111111111111111111111111111111111");
                 break;
-            case DIAMOND_9x9:
+            case "DIAMOND_9x9":
                 setPixels("000010000000111000001111100011111110" +
                           "111111111" +
                           "011111110001111100000111000000010000");
                 break;
-            case DISK_9x9:
+            case "DISK_9x9":
                 setPixels("001111100011111110111111111111111111" +
                           "111111111" +
                           "111111111111111111011111110001111100");
                 break;
-            case MORE_9x9:
+            case "MORE_9x9":
                 setPixels("000010000000010000000010000000010000" +
                           "111111111" +
                           "000010000000010000000010000000010000");
                 break;
-            case SQ_11x11:
+            case "SQ_11x11":
                 setPixels("11111111111111111111111111111111111111111111" + 
                           "11111111111" +
                           "11111111111" +
                           "11111111111" +
                           "11111111111111111111111111111111111111111111");
                 break;
-            case DISK_11x11:
+            case "DISK_11x11":
                 setPixels("00111111100011111111101111111111111111111111" +
                           "11111111111" +
                           "11111111111" +
                           "11111111111" +
                           "11111111111111111111110111111111000111111100");
                 break;
-            case DIAMOND_11x11:
+            case "DIAMOND_11x11":
                 setPixels("00000100000000011100000001111100000111111100" +
                           "01111111110" +
                           "11111111111" +
                           "01111111110" +
                           "00111111100000111110000000111000000000100000");
                 break;
-            case MORE_11x11:
+            case "MORE_11x11":
                 setPixels("00000100000000001000000000010000000000100000" +
                           "00000100000" +
                           "11111111111" +
