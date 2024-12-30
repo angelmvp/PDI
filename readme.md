@@ -22,4 +22,4 @@ Tener una herramienta capaz de realizar cualquier tipo de operación para limpia
 Para acceder al proyecto, favor de clonar la carpeta llamada `olin` donde se encuentra el proyecto completo.
 
 ```bash
-git clone https://tu-repositorio.com/olin
+git clone https://github.com/angelmvp/PDI
