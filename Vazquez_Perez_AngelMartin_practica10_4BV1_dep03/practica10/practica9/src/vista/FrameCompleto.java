@@ -32,8 +32,8 @@ import modelo.ImageBufferedImage;
 public class FrameCompleto extends JFrame{
     private JPanel panelBotones;
     private JPanel panelPrincipal;
+    private PanelMorfologicoGris panelMorfologicoGris;
     private PanelMorfologicoBinario panelMorfologicoBinario;
-    //private PanelPasaBajas panelPasaBajas;
     private PanelImagen panelImagen;
     private BufferedImage buffered;
     private Image imagen;
@@ -56,6 +56,7 @@ public class FrameCompleto extends JFrame{
         contenedor.setLayout(new BorderLayout());
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new CardLayout());
+        panelMorfologicoGris = new PanelMorfologicoGris(imagen);
         panelMorfologicoBinario = new PanelMorfologicoBinario(imagen);
         panelPrincipal.add(panelMorfologicoBinario, "panel ruido");
         contenedor.add(panelPrincipal, BorderLayout.CENTER);
@@ -106,6 +107,6 @@ public class FrameCompleto extends JFrame{
 //        }
 //    }
     private void actualizarPaneles(){
-        panelMorfologicoBinario.setImagen(imagen);
+        panelMorfologicoGris.setImagen(imagen);
     }
 }

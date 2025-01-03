@@ -30,7 +30,7 @@ import modelo.Ruido;
  *
  * @author jhona
  */
-public class PanelMorfologicoBinario extends JPanel{
+public class PanelMorfologicoGris extends JPanel{
     private Image imagen;
     private Image imagenGrises;
     private Image imagenModificada;
@@ -39,13 +39,13 @@ public class PanelMorfologicoBinario extends JPanel{
     private ImageBufferedImage imageBuffered;
     private PanelImagenHistograma panelImagen;
     private PanelImagenHistograma panelImagenModificada;
-    private MorfologiaBinaria morfologiaBinario;
     private JComboBox<String> comboEleccion;
     private JComboBox<String> comboTamES;
     private JComboBox<String> comboTipoES;
     private JButton botonAplicar;
     private JPanel panelOpcional;
-    public PanelMorfologicoBinario(Image imagen){
+    private MorfologiaGris morfologiaGris;
+    public PanelMorfologicoGris(Image imagen){
         this.imagen=imagen;
         this.imagenModificada=imagen;
         initComponents();
@@ -58,7 +58,8 @@ public class PanelMorfologicoBinario extends JPanel{
         panelImagen= new PanelImagenHistograma(imagenGrises);
         panelImagenModificada= new PanelImagenHistograma(imagenModificada);
         imagenInt = imageBuffered.getMatrizImagen(buffered,5);
-        morfologiaBinario = new MorfologiaBinaria(imagenInt,1);
+        morfologiaGris= new MorfologiaGris(imagenInt,3);
+        System.out.println("paso");
         JPanel panelTop= new JPanel(new GridLayout(2,4));
             comboEleccion = new JComboBox<>();
             comboEleccion.addItem("Erosion");
@@ -103,21 +104,21 @@ public class PanelMorfologicoBinario extends JPanel{
         String tipo = (String)comboEleccion.getSelectedItem();
         String tipoES = obtenerTipoES();
         int tamES=obtenerTamES();
-        morfologiaBinario.setTamES(tamES);
-        morfologiaBinario.setTipoES(tipoES);
+        morfologiaGris.setTamES(tamES);
+        morfologiaGris.setTipoES(tipoES);
         Image nuevaImagen=null;
         switch(tipo){
                 case "Erosion":
-                    nuevaImagen = morfologiaBinario.aplicarErosion();
+                    nuevaImagen = morfologiaGris.aplicarErosion();
                     break;
                 case "Dilatacion":
-                    nuevaImagen = morfologiaBinario.aplicarDilatacion();
+                    nuevaImagen = morfologiaGris.aplicarDilatacion();
                     break;
                 case "Apertura":
-                    nuevaImagen = morfologiaBinario.aplicarApertura();
+                    nuevaImagen = morfologiaGris.aplicarApertura();
                     break;
                 case "Clausura":
-                    nuevaImagen = morfologiaBinario.aplicarClausura();
+                    nuevaImagen = morfologiaGris.aplicarClausura();
                     break;
         }
         this.panelImagenModificada.setImagen(nuevaImagen);
@@ -149,7 +150,7 @@ public class PanelMorfologicoBinario extends JPanel{
         panelImagen.setImagen(imagenGrises);
         panelImagenModificada.setImagen(imagen);
         imagenInt = imageBuffered.getMatrizImagen(buffered, 5);
-        morfologiaBinario.setMatrizImagen(imagenInt);
+        morfologiaGris.setMatrizImagen(imagenInt);
         aplicarMorfologia();
     }
 }

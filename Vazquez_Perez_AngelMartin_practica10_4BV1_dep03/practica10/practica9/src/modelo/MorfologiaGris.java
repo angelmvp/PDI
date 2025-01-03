@@ -15,21 +15,22 @@ import javax.swing.JFrame;
  *
  * @author jhona
  */
-public class ES {
+public class MorfologiaGris {
     private int[][] imagenInt;
     private int [][] copiaMatriz;
     private int alto;
     private int ancho;
     private ImageBufferedImage imageBuffered;
-    private int tamMascara;
-    private String tipoMascara;
+    private int tamES;
+    private String tipoES;
     private int[][] nuevaMatriz;
-    
-    public ES(int[][] imagenInt,int tamMascara){
+    private ElementoEstructurante ES;
+    public MorfologiaGris(int[][] imagenInt,int tamES){
         this.imagenInt=imagenInt;
-        this.tamMascara=tamMascara;
+        this.tamES=tamES;
         imageBuffered = new ImageBufferedImage();
-        tipoMascara="cruz";
+        tipoES="cruz";
+        ES = new ElementoEstructurante(imagenInt,tamES,tipoES);
         initComponents();
     }
     public void initComponents(){
@@ -48,14 +49,14 @@ public class ES {
         return nuevaImagen;
     }
     public void obtenerMaximo(int x,int y){
-        int[] ventana=obtenerVentana(x,y);
+        int[] ventana=ES.obtenerVentanaES(x,y);
         int max=0;
         for(int i=0;i<ventana.length;i++){
             if (ventana[i]>max){
                 max=ventana[i];
             }
         }
-        setValorVentana(x,y,max);
+        setValorESMatriz(x,y,max);
     }
 
     public Image aplicarErosion() {
@@ -69,180 +70,53 @@ public class ES {
         return nuevaImagen;
     }
     public void obtenerMinimo(int x,int y){
-        int[] ventana=obtenerVentana(x,y);
+        int[] ventana=ES.obtenerVentanaES(x,y);
         int min=255;
         for(int i=0;i<ventana.length;i++){
             if (ventana[i]<min){
                 min=ventana[i];
             }
         }
-        setValorVentana(x,y,min);
+        setValorESMatriz(x,y,min);
     }  
+    
     public Image aplicarClausura(){
         Image dilatacion = this.aplicarDilatacion();
-        ES nuevoes = new ES(imageBuffered.getMatrizImagen(imageBuffered.getBufferedImageColor(dilatacion),5),3);
+        MorfologiaGris nuevoes = new MorfologiaGris(imageBuffered.getMatrizImagen(imageBuffered.getBufferedImageColor(dilatacion),5),3);
         Image nuevaImg = nuevoes.aplicarErosion();
         return nuevaImg;
     }
     public Image aplicarApertura(){
         Image erosion = this.aplicarErosion();
-        ES nuevoes = new ES(imageBuffered.getMatrizImagen(imageBuffered.getBufferedImageColor(erosion),5),3);
+        MorfologiaGris nuevoes = new MorfologiaGris(imageBuffered.getMatrizImagen(imageBuffered.getBufferedImageColor(erosion),5),3);
         Image nuevaImg = nuevoes.aplicarDilatacion();
         return nuevaImg;
     }
-    public void setValorVentana(int x,int y,int valor){
-        switch(tipoMascara){
+    public void setValorESMatriz(int x,int y,int valor){
+        switch(tipoES){
                 case "cuadrada":
                     setVentanaCuadrada(x,y,valor);
+                    break;
                 case "horizontal":
                     setVentanaHorizontal(x,y,valor);
+                    break;
                 case "vertical":
                     setVentanaVertical(x,y,valor);
+                    break;
                 case "cruz":
                     setVentanaCruz(x,y,valor);
+                    break;
                 case "equis":
                     setVentanaEquis(x,y,valor);
+                    break;
                 case "diamante":
                     setVentanaDiamante(x,y,valor);
+                    break;
         }
-    }
-    private int[] obtenerVentana(int x, int y) {
-        switch(tipoMascara){
-                case "cuadrada":
-                    return obtenerVentanaCuadrada(x,y);
-                case "horizontal":
-                    return obtenerVentanaHorizontal(x,y);
-                case "vertical":
-                    return obtenerVentanaVertical(x,y);
-                case "cruz":
-                    return obtenerVentanaCruz(x,y);
-                case "equis":
-                    return obtenerVentanaEquis(x,y);
-                case "diamante":
-                    return obtenerVentanaDiamante(x,y);
-        }
-        return null;
-    }
-    private int[] obtenerVentanaCuadrada(int x, int y) {
-        int mitad = tamMascara / 2;
-        int[] ventana = new int[tamMascara * tamMascara];
-        int index = 0;
-        for (int i = -mitad; i <= mitad; i++) {
-            for (int j = -mitad; j <= mitad; j++) {
-                int posX = Math.min(Math.max(x + i, 0), ancho - 1);
-                int posY = Math.min(Math.max(y + j, 0), alto - 1);
-                ventana[index++] = copiaMatriz[posY][posX];
-            }
-        }
-        return ventana;
-    }
-    private int[] obtenerVentanaHorizontal(int x, int y) {
-        int mitad = tamMascara / 2;
-        int[] ventana = new int[tamMascara];
-        int index = 0;
-        for (int i = -mitad; i <= mitad; i++) {
-                int posX = Math.min(Math.max(x + i, 0), ancho - 1);
-                ventana[index++] = copiaMatriz[y][posX];
-        }
-        return ventana;
-    }
-    private int[] obtenerVentanaVertical(int x, int y) {
-        int mitad = tamMascara / 2;
-        int[] ventana = new int[tamMascara];
-        int index = 0;
-        for (int i = -mitad; i <= mitad; i++) {
-                int posY = Math.min(Math.max(y + i, 0), alto - 1);
-                ventana[index++] = copiaMatriz[posY][x];
-        }
-        return ventana;
-    }
-    private int[] obtenerVentanaCruz(int x, int y) {
-        int mitad= tamMascara/2;
-        int[] ventana= new int[tamMascara*2-1];
-        int[] horizontal = obtenerVentanaHorizontal(x,y);
-        int[] vertical = obtenerVentanaVertical(x,y);
-        for (int i = 0; i < tamMascara; i++) { 
-            ventana[i]=horizontal[i];
-        }
-        ventana[mitad]=vertical[0];
-        int index=1;
-        for (int i = tamMascara; i < tamMascara*2-1; i++) { 
-            ventana[i]=vertical[index];
-            index++;
-        } 
-        return ventana;
-    }
-    private int[] obtenerVentanaEquis(int x, int y) {
-        int mitad = tamMascara / 2;
-        int[] ventana = new int[tamMascara * 2 - 1]; // Ajustamos el tamaño para evitar un índice extra
-        int index = 0;
-
-        for (int i = -mitad; i <= mitad; i++) {
-            int posX1 = Math.min(Math.max(x + i, 0), ancho - 1);
-            int posY1 = Math.min(Math.max(y + i, 0), alto - 1);
-
-            int posX2 = Math.min(Math.max(x - i, 0), ancho - 1);
-            int posY2 = Math.min(Math.max(y + i, 0), alto - 1);
-
-            if(index+1==ventana.length){
-                break;
-            }
-            if (index < ventana.length) { 
-                ventana[index++] = copiaMatriz[posY1][posX1];
-            }
-            if (i != 0 && index < ventana.length) {
-                ventana[index++] = copiaMatriz[posY2][posX2];
-            }
-        }
-        return ventana;
-    }
-    private int[] obtenerVentanaEquis(int x, int y,int tam) {
-        int mitad = tam / 2;
-        int[] ventana = new int[tam * 2 - 1]; // Ajustamos el tamaño para evitar un índice extra
-        int index = 0;
-
-        for (int i = -mitad; i <= mitad; i++) {
-            int posX1 = Math.min(Math.max(x + i, 0), ancho - 1);
-            int posY1 = Math.min(Math.max(y + i, 0), alto - 1);
-
-            int posX2 = Math.min(Math.max(x - i, 0), ancho - 1);
-            int posY2 = Math.min(Math.max(y + i, 0), alto - 1);
-
-            if(index+1==ventana.length){
-                break;
-            }
-            if (index < ventana.length) { 
-                ventana[index++] = copiaMatriz[posY1][posX1];
-            }
-            if (i != 0 && index < ventana.length) {
-                ventana[index++] = copiaMatriz[posY2][posX2];
-            }
-        }
-        return ventana;
-    }
-
-
-    private int[] obtenerVentanaDiamante(int x, int y) {
-        int mitad = tamMascara / 2;
-        int[] cruz = obtenerVentanaCruz(x,y);
-        int[] equis = obtenerVentanaEquis(x,y,tamMascara-2);
-        int[] ventana = new int[cruz.length+equis.length-1]; 
-        for(int i=0; i<equis.length;i++){
-            ventana[i]=equis[i];
-        }
-        ventana[mitad]=cruz[0];
-        int index=1;
-        for(int i=equis.length;i<cruz.length+equis.length-1;i++){
-            ventana[i]=cruz[index];
-            index++;
-        }
-        return ventana;
-    }
-
-    
+    } 
     
     private void setVentanaCuadrada(int x, int y, int valor) {
-        int mitad = tamMascara / 2;
+        int mitad = tamES / 2;
         for (int i = -mitad; i <= mitad; i++) {
             for (int j = -mitad; j <= mitad; j++) {
                 int fila = y + i; // Coordenada en y
@@ -255,7 +129,7 @@ public class ES {
         }
     }
     private void setVentanaHorizontal(int x, int y, int valor) {
-        int mitad = tamMascara / 2;
+        int mitad = tamES / 2;
         for (int i = -mitad; i <= mitad; i++) {
             int columna = x + i; // Coordenada en x
             if (columna >= 0 && columna < ancho) {
@@ -266,7 +140,7 @@ public class ES {
     }
 
     private void setVentanaVertical(int x, int y, int valor) {
-        int mitad = tamMascara / 2;
+        int mitad = tamES / 2;
         for (int i = -mitad; i <= mitad; i++) {
             int fila = y + i; // Coordenada en y
             if (fila >= 0 && fila < alto) {
@@ -277,7 +151,7 @@ public class ES {
     }
 
     private void setVentanaEquis(int x, int y, int valor) {
-        int mitad = tamMascara / 2;
+        int mitad = tamES / 2;
         for (int i = -mitad; i <= mitad; i++) {
             int fila1 = y + i; // Diagonal principal hacia abajo
             int columna1 = x + i;
@@ -298,7 +172,7 @@ public class ES {
         }
     }
 private void setVentanaDiamante(int x, int y, int valor) {
-    int mitad = tamMascara / 2;
+    int mitad = tamES / 2;
     for (int i = -mitad; i <= mitad; i++) {
         for (int j = -mitad; j <= mitad; j++) {
             // Verifica si el punto (i, j) está dentro del diamante
@@ -314,7 +188,7 @@ private void setVentanaDiamante(int x, int y, int valor) {
     }
 }
 private void setVentanaCruz(int x, int y, int valor) {
-    int mitad = tamMascara / 2;
+    int mitad = tamES / 2;
 
     // Línea horizontal
     for (int i = -mitad; i <= mitad; i++) {
@@ -344,11 +218,11 @@ private void setVentanaCruz(int x, int y, int valor) {
         return padre.createImage(new MemoryImageSource(ancho, alto, 
                 imageBuffered.convertirInt2DAInt1D(matriz, ancho, alto), 0, ancho));
     }
-    public void setTipoMascara(String tipoMascara){
-        this.tipoMascara=tipoMascara;
+    public void setTipoES(String tipoMascara){
+        this.tipoES=tipoMascara;
     }
-    public void setTamMascara(int tam){
-        this.tamMascara=tam;
+    public void setTamES(int tam){
+        this.tamES=tam;
     }
     public void setMatrizImagen(int[][] imagenInt){
         this.imagenInt=imagenInt;
