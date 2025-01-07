@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista;
+package vista.MorfoGris;
 
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -14,7 +13,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -23,43 +21,31 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import modelo.ImageBufferedImage;
 
 /**
  *
  * @author jhona
  */
-public class FrameCompleto extends JFrame{
-    private JPanel panelBotones;
-    private JPanel panelPrincipal;
+public class FrameMorfoGris extends JFrame{
     private PanelMorfologicoGris panelMorfologicoGris;
-    private PanelMorfologicoBinario panelMorfologicoBinario;
-    private PanelImagen panelImagen;
-    private BufferedImage buffered;
     private Image imagen;
-    private ImageBufferedImage imageBuffered;
-    private String panelActual;
-    public FrameCompleto() {
-        super("Practica 9");        
+    public FrameMorfoGris() {
+        super("Morfologia Grises");        
         initComponents();
-      addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0); 
-            }
-        });
+    }
+    public FrameMorfoGris(Image imagen) {
+        super("Morfologia Grises"); 
+        this.imagen=imagen;  
+        initComponents();
     }
     private void initComponents() {
-        imageBuffered = new ImageBufferedImage();
-        seleccionarImagen();
+        if(imagen==null){
+            seleccionarImagen();
+        }
         Container contenedor = this.getContentPane();
         contenedor.setLayout(new BorderLayout());
-        panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new CardLayout());
         panelMorfologicoGris = new PanelMorfologicoGris(imagen);
-        panelMorfologicoBinario = new PanelMorfologicoBinario(imagen);
-        panelPrincipal.add(panelMorfologicoBinario, "panel ruido");
-        contenedor.add(panelPrincipal, BorderLayout.CENTER);
+        contenedor.add(panelMorfologicoGris, BorderLayout.CENTER);
         
         JButton botonCargar = new JButton("Seleccionar Imagen");
             botonCargar.addActionListener(new ActionListener() {
@@ -92,20 +78,6 @@ public class FrameCompleto extends JFrame{
             }
         }
     }
-//    public void crearPanelBinarizacion(){
-//        System.out.println(panelActual);
-//        if(panelActual=="pasaBajas"){
-//            System.out.println("se creo pasabajas");
-//            panelUmbral= new PanelUmbral(panelPasaBajas.getImagenFiltrada());
-//            new FrameUmbral(panelUmbral);
-//        }else if (panelActual=="pasaAltas"){
-//            System.out.println("se creo pasa altas");
-//            panelUmbral=new PanelUmbral (panelPasaAltas.getImagenFiltrada());
-//            new FrameUmbral(panelUmbral);
-//        }else{
-//            return;
-//        }
-//    }
     private void actualizarPaneles(){
         panelMorfologicoGris.setImagen(imagen);
     }

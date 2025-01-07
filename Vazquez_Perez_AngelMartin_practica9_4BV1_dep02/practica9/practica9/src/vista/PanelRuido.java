@@ -69,6 +69,8 @@ public class PanelRuido extends JPanel {
             comboEleccion.addItem("Ruido Rayleigh");
             comboEleccion.addItem("Ruido Sal y pimienta");
             comboEleccion.addItem("Ruido Uniforme");
+            comboEleccion.addItem("Ruido SOLO SAL");
+            comboEleccion.addItem("Ruido SOLO PIMIENTA");
             panelTop.add(new Label("Escoja el tipo de ruido"));
             panelTop.add(comboEleccion);
             panelTop.add(botonAplicar);
@@ -222,6 +224,13 @@ public class PanelRuido extends JPanel {
                 }
                 nuevaImagenRuido =ruido.aplicarRuidoUniforme(min,max);
                 break;
+            case "Ruido SOLO SAL":
+                   nuevaImagenRuido=ruido.aplicarRuidoSal();
+                   break;
+            case "Ruido SOLO PIMIENTA":
+                   nuevaImagenRuido=ruido.aplicarRuidoPimienta();
+                   break;   
+              
         }
         panelImagenRuido.setImagen(nuevaImagenRuido);
         

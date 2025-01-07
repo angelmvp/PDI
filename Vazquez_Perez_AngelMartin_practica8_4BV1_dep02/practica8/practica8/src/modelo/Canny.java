@@ -55,7 +55,7 @@ public class Canny {
     }
 
     // Método para calcular la magnitud y el ángulo del gradiente
-    private void calcularGradiente(int[][] imagen, int[][] magnitud, int[][] angulo) {
+        private void calcularGradiente(int[][] imagen, int[][] magnitud, int[][] angulo) {
         for (int y = 1; y < alto - 1; y++) {
             for (int x = 1; x < ancho - 1; x++) {
                 int gx = (imagen[y - 1][x + 1] + 2 * imagen[y][x + 1] + imagen[y + 1][x + 1]) -

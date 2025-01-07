@@ -57,11 +57,20 @@ public class Aritmeticas {
             for (int x=0; x<anchoMax;x++){
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
-                }else{
+                if (y >= alto1 || x >= ancho1) {
+                    if (y < alto2 && x < ancho2) { 
+                        nuevoGris = matrizImagen2[y][x];
+                    } else {
+                        nuevoGris = 128;
+                    }
+                }
+                else if (y >= alto2 || x >= ancho2) {
+                    if (y < alto1 && x < ancho1) {
+                        nuevoGris = matrizImagen1[y][x];
+                    } else {
+                        nuevoGris = 128;  
+                    }
+                } else{
                     nuevoGris = (matrizImagen1[y][x]+ matrizImagen2[y][x])/2;
                 }
                 color=new Color(nuevoGris,nuevoGris,nuevoGris);
@@ -80,10 +89,19 @@ public class Aritmeticas {
             for (int x=0; x<anchoMax;x++){
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
+                if (y >= alto1 || x >= ancho1) {
+                    if (y < alto2 && x < ancho2) { 
+                        nuevoGris = matrizImagen2[y][x];
+                    } else {
+                        nuevoGris = 128;
+                    }
+                }
+                else if (y >= alto2 || x >= ancho2) {
+                    if (y < alto1 && x < ancho1) {
+                        nuevoGris = matrizImagen1[y][x];
+                    } else {
+                        nuevoGris = 128;  
+                    }
                 }else{
                     nuevoGris = Math.round(Math.abs(matrizImagen1[y][x]- matrizImagen2[y][x]));
                 }
@@ -105,10 +123,19 @@ public class Aritmeticas {
                 int max;
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
+                if (y >= alto1 || x >= ancho1) {
+                    if (y < alto2 && x < ancho2) { 
+                        nuevoGris = matrizImagen2[y][x];
+                    } else {
+                        nuevoGris = 128;
+                    }
+                }
+                else if (y >= alto2 || x >= ancho2) {
+                    if (y < alto1 && x < ancho1) {
+                        nuevoGris = matrizImagen1[y][x];
+                    } else {
+                        nuevoGris = 128;  
+                    }
                 }else{
                     int multiplicacion= (matrizImagen1[y][x] * matrizImagen2[y][x])/255;
                     min=Math.min(matrizImagen1[y][x], matrizImagen2[y][x]);
@@ -134,10 +161,19 @@ public class Aritmeticas {
                 int max;
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
+                if (y >= alto1 || x >= ancho1) {
+                    if (y < alto2 && x < ancho2) { 
+                        nuevoGris = matrizImagen2[y][x];
+                    } else {
+                        nuevoGris = 128;
+                    }
+                }
+                else if (y >= alto2 || x >= ancho2) {
+                    if (y < alto1 && x < ancho1) {
+                        nuevoGris = matrizImagen1[y][x];
+                    } else {
+                        nuevoGris = 128;  
+                    }
                 }else{
                     double b=matrizImagen2[y][x];
                     if( b==0){

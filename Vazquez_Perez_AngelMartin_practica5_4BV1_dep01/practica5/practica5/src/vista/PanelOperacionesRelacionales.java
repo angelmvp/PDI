@@ -13,9 +13,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import modelo.Aritmeticas;
 import modelo.ImageBufferedImage;
-import modelo.Logicas;
 import modelo.Relacionales;
 
 /**

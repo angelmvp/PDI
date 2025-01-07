@@ -174,9 +174,6 @@ public class ConversortoRGB {
     return imagenNueva;
 }
 
-
-
-
     public Image YIQtoRGB(){
         int[][] nuevaImagen= new int [alto][ancho];
         int R,G,B;

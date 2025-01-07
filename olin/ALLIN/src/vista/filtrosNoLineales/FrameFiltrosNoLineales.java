@@ -34,28 +34,17 @@ import vista.PanelImagen;
  * @author jhona
  */
 public class FrameFiltrosNoLineales extends JFrame{
-    private JPanel panelBotones;
-    private JPanel panelPrincipal;
-    private PanelRuido panelRuido;
     private PanelFiltroNoLineal panelFiltroNoLineal;
     //private PanelPasaBajas panelPasaBajas;
-    private PanelImagen panelImagen;
     private BufferedImage buffered;
     private Image imagen;
     private ImageBufferedImage imageBuffered;
-    private String panelActual;
-    private PanelUmbral panelUmbral;
     public FrameFiltrosNoLineales() {
-        super("Practica 9");        
+        super("Filtros No Lnieales");        
         initComponents();
-      addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0); 
-            }
-        });
     }
     public FrameFiltrosNoLineales(Image imagen){
+       super("Filtros No Lnieales");  
        this.imagen=imagen;
        imageBuffered = new ImageBufferedImage();
        this.buffered=imageBuffered.getBufferedImageColor(imagen);
@@ -66,40 +55,10 @@ public class FrameFiltrosNoLineales extends JFrame{
         if(imagen==null){
             seleccionarImagen();
         }
-        panelActual="pasaAltas";
-        panelBotones = new JPanel();
-        panelBotones.setLayout(new GridLayout(3, 1, 4, 4));
-        JButton botonRuido = new JButton("Ruido ");
-        botonRuido.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CardLayout card = (CardLayout)panelPrincipal.getLayout();
-                card.show(panelPrincipal, "panel ruido");
-                panelActual="ruido";
-            }
-        });
-        JButton botonNoLineal = new JButton("Filtros no Lineales ");
-        botonNoLineal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("filtros nos linealses");
-                CardLayout card = (CardLayout)panelPrincipal.getLayout();
-                card.show(panelPrincipal, "panel no lineal");
-                panelActual="nolineal";
-            }
-        });
         Container contenedor = this.getContentPane();
         contenedor.setLayout(new BorderLayout());
-        panelBotones.add(botonRuido);
-        panelBotones.add(botonNoLineal);
-        contenedor.add(panelBotones, BorderLayout.EAST);
-        panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new CardLayout());
-        panelRuido = new PanelRuido(imagen);
         panelFiltroNoLineal = new PanelFiltroNoLineal(imagen);
-        panelPrincipal.add(panelRuido, "panel ruido");
-        panelPrincipal.add(panelFiltroNoLineal, "panel no lineal");
-        contenedor.add(panelPrincipal, BorderLayout.CENTER);
+        contenedor.add(panelFiltroNoLineal, BorderLayout.CENTER);
         
         JButton botonCargar = new JButton("Seleccionar Imagen");
             botonCargar.addActionListener(new ActionListener() {
@@ -109,9 +68,6 @@ public class FrameFiltrosNoLineales extends JFrame{
                 actualizarPaneles();
                 }
             });
-        JPanel panelSeleccion = new JPanel(new GridLayout(1,2));
-        panelSeleccion.add(botonCargar);
-        contenedor.add(panelSeleccion,BorderLayout.NORTH);
         setSize(1200, 700);
         setLocation(22, 22);
         setVisible(true);
@@ -132,22 +88,7 @@ public class FrameFiltrosNoLineales extends JFrame{
             }
         }
     }
-//    public void crearPanelBinarizacion(){
-//        System.out.println(panelActual);
-//        if(panelActual=="pasaBajas"){
-//            System.out.println("se creo pasabajas");
-//            panelUmbral= new PanelUmbral(panelPasaBajas.getImagenFiltrada());
-//            new FrameUmbral(panelUmbral);
-//        }else if (panelActual=="pasaAltas"){
-//            System.out.println("se creo pasa altas");
-//            panelUmbral=new PanelUmbral (panelPasaAltas.getImagenFiltrada());
-//            new FrameUmbral(panelUmbral);
-//        }else{
-//            return;
-//        }
-//    }
     private void actualizarPaneles(){
-        panelRuido.setImagen(imagen);
         panelFiltroNoLineal.setImagen(imagen);   
     }
 }

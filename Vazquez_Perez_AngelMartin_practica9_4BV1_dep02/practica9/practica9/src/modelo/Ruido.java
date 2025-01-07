@@ -144,6 +144,42 @@ public class Ruido {
         }
         return generarImagenDesdeMatriz(nuevaMatriz);
     }
+    public Image aplicarRuidoSal() {
+        int[][] nuevaMatriz = new int[alto][ancho];
+        Random random = new Random();
+        double probability = 0.02; // Probabilidad de que un píxel sea afectado
+
+        for (int y = 0; y < alto; y++) {
+            for (int x = 0; x < ancho; x++) {
+                int gris = matrizImagen[y][x];
+                if (random.nextDouble() < probability) {
+                    gris = 255; // Sal (blanco)
+                }
+                Color color = new Color(gris, gris, gris);
+                nuevaMatriz[y][x] = color.getRGB();
+            }
+        }
+        return generarImagenDesdeMatriz(nuevaMatriz);
+    }
+    public Image aplicarRuidoPimienta() {
+        int[][] nuevaMatriz = new int[alto][ancho];
+        Random random = new Random();
+        double probability = 0.02; // Probabilidad de que un píxel sea afectado
+
+        for (int y = 0; y < alto; y++) {
+            for (int x = 0; x < ancho; x++) {
+                int gris = matrizImagen[y][x];
+                if (random.nextDouble() < probability) {
+                    gris = 0; // Pimienta (negro)
+                }
+                Color color = new Color(gris, gris, gris);
+                nuevaMatriz[y][x] = color.getRGB();
+            }
+        }
+        return generarImagenDesdeMatriz(nuevaMatriz);
+    }
+
+
 
     private Image generarImagenDesdeMatriz(int[][] matriz) {
         JFrame padre = new JFrame();

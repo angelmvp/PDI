@@ -69,8 +69,8 @@ public class FrameImagenManipulacion extends JFrame {
         panelPrincipal.add(panelConversion, "panel conversion");
         panelPrincipal.add(panelImagenHistograma, "panel histograma");
         contenedor.add(panelPrincipal, BorderLayout.CENTER);       
-        setSize(800, 700);
-        setLocation(500,2);
+        setSize(1150, 800);
+        setLocation(50,20);
         setVisible(true);
     }
     

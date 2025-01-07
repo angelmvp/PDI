@@ -5,20 +5,14 @@
  */
 package vista.ruido;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Image;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
@@ -27,10 +21,11 @@ import javax.swing.JPanel;
 public class FrameRuido extends JFrame{
     private Image imagen;
     public FrameRuido(){
+        super("Ruido en imagen");
         initComponents();
     }
     public FrameRuido(Image imagen){
-      super("Ruido");    
+      super("Ruido en imagen");    
       this.imagen=imagen;
       initComponents();
     }

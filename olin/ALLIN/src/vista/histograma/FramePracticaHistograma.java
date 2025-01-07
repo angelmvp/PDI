@@ -37,16 +37,11 @@ public class FramePracticaHistograma extends JFrame{
     private Image img;
     private ImageBufferedImage buffered;
     public FramePracticaHistograma() {
-        super("Practica 2");        
+        super("Practica Histograma");        
         initComponents();
-      addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0); 
-            }
-        });
     }
     public FramePracticaHistograma(Image imagen) {
+        super("Practica Histograma");   
         this.img = imagen;
         this.buffered = new ImageBufferedImage();
         this.imagenBuffered = buffered.getBufferedImageColor(img);

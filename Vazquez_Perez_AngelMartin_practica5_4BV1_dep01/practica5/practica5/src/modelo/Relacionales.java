@@ -57,10 +57,19 @@ public class Relacionales {
             for (int x=0; x<anchoMax;x++){
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
+                if (y >= alto1 || x >= ancho1) {
+                    if (y < alto2 && x < ancho2) { 
+                        nuevoGris = matrizImagen2[y][x];
+                    } else {
+                        nuevoGris = 128;
+                    }
+                }
+                else if (y >= alto2 || x >= ancho2) {
+                    if (y < alto1 && x < ancho1) {
+                        nuevoGris = matrizImagen1[y][x];
+                    } else {
+                        nuevoGris = 128;  
+                    }
                 }else{
                     if(operacion=="=="){
                         nuevoGris = (matrizImagen1[y][x]==matrizImagen2[y][x]) ? 255: 0;

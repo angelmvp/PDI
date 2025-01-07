@@ -34,16 +34,11 @@ public class FrameConversor extends JFrame{
     private ImageBufferedImage buffered;
     private JComboBox<String> comboConversion;
     public FrameConversor() {
-        super("Practica 3");        
+        super("Conversion de imagenes");        
         initComponents();
-      addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0); 
-            }
-        });
     }
     public FrameConversor(Image imagen) {
+        super("Conversion de imagenes");
         this.img = imagen;
         this.buffered = new ImageBufferedImage();
         this.imagen = buffered.getBufferedImageColor(img);

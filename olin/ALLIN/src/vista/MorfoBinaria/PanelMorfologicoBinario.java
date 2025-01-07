@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package vista;
+package vista.MorfoBinaria;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -11,20 +11,13 @@ import java.awt.Image;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.JTextField;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import modelo.MorfologiaGris;
 import modelo.ImageBufferedImage;
 import modelo.MorfologiaBinaria;
-import modelo.Ruido;
+import vista.histograma.PanelImagenHistograma;
 
 /**
  *
@@ -44,7 +37,6 @@ public class PanelMorfologicoBinario extends JPanel{
     private JComboBox<String> comboTamES;
     private JComboBox<String> comboTipoES;
     private JButton botonAplicar;
-    private JPanel panelOpcional;
     public PanelMorfologicoBinario(Image imagen){
         this.imagen=imagen;
         this.imagenModificada=imagen;

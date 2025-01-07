@@ -45,8 +45,8 @@ public class PanelUmbral extends JPanel {
     }
     public void initComponents(){
         imageBuffered= new ImageBufferedImage();
-        buffered= imageBuffered.getBufferedImage(imagen);
-        imagenGrises=imageBuffered.getImage(buffered, 4);
+        buffered= imageBuffered.getBufferedImageColor(imagen);
+        imagenGrises=imageBuffered.getImage(buffered, 5);
         this.setLayout(new BorderLayout());
         sliderPrimerUmbral=new JSlider(0,255,0);
         sliderPrimerUmbral.setMajorTickSpacing(50);
@@ -131,7 +131,7 @@ public class PanelUmbral extends JPanel {
 
     public void setImagen(Image imagen){
         this.imagen=imagen;
-        buffered=imageBuffered.getBufferedImage(imagen);
+        buffered=imageBuffered.getBufferedImageColor(imagen);
         imagenGrises=imageBuffered.getImage(buffered, 5);
         panelImagen.setImagen(imagenGrises);
         panelImagenUmbralizada.setImagen(imagen);

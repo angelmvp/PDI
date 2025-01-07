@@ -32,15 +32,15 @@ import modelo.ImageBufferedImage;
 public class FrameCompleto extends JFrame{
     private JPanel panelBotones;
     private JPanel panelPrincipal;
-    private PanelMorfologicoGris panelMorfologicoGris;
-    private PanelMorfologicoBinario panelMorfologicoBinario;
+    private PanelDesplazamiento panelDesplazamiento;
+    private PanelEqualizacion panelEcualizacion;
+    private PanelModificacion1 panelmodificacion1;
     private PanelImagen panelImagen;
     private BufferedImage buffered;
     private Image imagen;
     private ImageBufferedImage imageBuffered;
-    private String panelActual;
     public FrameCompleto() {
-        super("Practica 9");        
+        super("Practica  6 y 7");        
         initComponents();
       addWindowListener(new WindowAdapter() {
             @Override
@@ -52,13 +52,48 @@ public class FrameCompleto extends JFrame{
     private void initComponents() {
         imageBuffered = new ImageBufferedImage();
         seleccionarImagen();
+        panelBotones = new JPanel();
+        panelBotones.setLayout(new GridLayout(3, 1, 4, 4));
+        JButton botonDesplazamiento = new JButton("Desplazamiento De histograma");
+        botonDesplazamiento.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout card = (CardLayout)panelPrincipal.getLayout();
+                card.show(panelPrincipal, "panel desplazamiento");
+            }
+        });
+        JButton botonEcualizacion = new JButton("Equalizacion");
+        botonEcualizacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout card = (CardLayout)panelPrincipal.getLayout();
+                card.show(panelPrincipal, "panel ecualizacion");
+            }
+        });
+        JButton botonModificacion = new JButton("PanelModificacion1");
+        botonModificacion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CardLayout card = (CardLayout)panelPrincipal.getLayout();
+                card.show(panelPrincipal, "panel modificacion");
+            }
+        });
         Container contenedor = this.getContentPane();
         contenedor.setLayout(new BorderLayout());
+        panelBotones.add(botonModificacion);
+        panelBotones.add(botonDesplazamiento);
+        panelBotones.add(botonEcualizacion);
+        
+
+        contenedor.add(panelBotones, BorderLayout.EAST);
         panelPrincipal = new JPanel();
         panelPrincipal.setLayout(new CardLayout());
-        panelMorfologicoGris = new PanelMorfologicoGris(imagen);
-        panelMorfologicoBinario = new PanelMorfologicoBinario(imagen);
-        panelPrincipal.add(panelMorfologicoBinario, "panel ruido");
+        panelDesplazamiento = new PanelDesplazamiento(imagen);
+        panelEcualizacion= new PanelEqualizacion(imagen);
+        panelmodificacion1= new PanelModificacion1(imagen);
+        panelPrincipal.add(panelDesplazamiento, "panel desplazamiento");
+        panelPrincipal.add(panelEcualizacion, "panel ecualizacion");
+        panelPrincipal.add(panelmodificacion1, "panel modificacion");
         contenedor.add(panelPrincipal, BorderLayout.CENTER);
         
         JButton botonCargar = new JButton("Seleccionar Imagen");
@@ -92,21 +127,10 @@ public class FrameCompleto extends JFrame{
             }
         }
     }
-//    public void crearPanelBinarizacion(){
-//        System.out.println(panelActual);
-//        if(panelActual=="pasaBajas"){
-//            System.out.println("se creo pasabajas");
-//            panelUmbral= new PanelUmbral(panelPasaBajas.getImagenFiltrada());
-//            new FrameUmbral(panelUmbral);
-//        }else if (panelActual=="pasaAltas"){
-//            System.out.println("se creo pasa altas");
-//            panelUmbral=new PanelUmbral (panelPasaAltas.getImagenFiltrada());
-//            new FrameUmbral(panelUmbral);
-//        }else{
-//            return;
-//        }
-//    }
     private void actualizarPaneles(){
-        panelMorfologicoGris.setImagen(imagen);
+        panelEcualizacion.setImagen(imagen);
+        panelDesplazamiento.setImagen(imagen);
+        panelmodificacion1.setImagen(imagen);
+        
     }
 }

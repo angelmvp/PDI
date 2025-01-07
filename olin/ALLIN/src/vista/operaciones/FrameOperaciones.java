@@ -44,11 +44,12 @@ public class FrameOperaciones extends JFrame{
     private Image imagen2;
     private ImageBufferedImage imageBuffered;
     public FrameOperaciones() {
-        super("Practica 5");        
+        super("Operaciones entre imagenes");        
         initComponents();
 
     }
     public FrameOperaciones(Image imagen) {
+        super("Operaciones entre imagenes");
         this.imagen1 = imagen;
         this.imageBuffered = new ImageBufferedImage();
         this.buffered1 = imageBuffered.getBufferedImageColor(imagen1);

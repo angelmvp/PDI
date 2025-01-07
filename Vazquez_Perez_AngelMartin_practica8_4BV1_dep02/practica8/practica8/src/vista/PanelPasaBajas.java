@@ -78,7 +78,6 @@ public class PanelPasaBajas extends JPanel {
                     //panelDerechaBottom.add(new JLabel("introduzca el valor de alpha para la intensidad de filtrado "));
                     //panelDerechaBottom.add(sliderAlpha);
                     panelDerechaBottom.add(alpha);
-                    
                 panelDerecha.add(panelDerechaBottom);
         JPanel panelCentro= new JPanel(new GridLayout(1,3));
             panelCentro.add(panelImagen);

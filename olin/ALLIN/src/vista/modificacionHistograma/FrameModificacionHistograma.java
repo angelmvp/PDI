@@ -41,17 +41,11 @@ public class FrameModificacionHistograma extends JFrame{
     private Image imagen;
     private ImageBufferedImage imageBuffered;
     public FrameModificacionHistograma() {
-        super("Practica  6 y 7");        
+        super("Practica modificacion de histograma");        
         initComponents();
-      addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0); 
-            }
-        });
     }
     public FrameModificacionHistograma(Image imagen){
-        super("Practica  6 y 7");        
+        super("Practica modificacion de histograma");
         this.imagen = imagen;
         this.imageBuffered = new ImageBufferedImage();
         this.buffered = imageBuffered.getBufferedImageColor(imagen);

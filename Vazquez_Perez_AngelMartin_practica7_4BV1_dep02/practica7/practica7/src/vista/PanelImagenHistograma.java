@@ -156,4 +156,25 @@ public class PanelImagenHistograma extends JPanel {
        FrameImagenHistograma frameImgHistograma= new FrameImagenHistograma(img,nuevoPanel);
     }
 
+    public void imprimirArreglo(int[] datos){
+            for(int x=0; x<200; x++){
+                System.out.println(datos[x]);
+            }
+    }
+    public void imprimir(){
+         for(int y=0; y<imagen.getHeight();y++){
+            for(int x=0; x<imagen.getWidth(); x++){
+                if(imagenInt[y][x]>253){
+                System.out.println(imagenInt[y][x]);
+            }
+                
+            }
+        }
+    }
+    public Histograma getHistograma(){
+        return histograma;
+    }
+    public Image getImage(){
+        return imagen;
+    }
 }

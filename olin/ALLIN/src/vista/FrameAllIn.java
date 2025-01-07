@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
+import vista.MorfoBinaria.FrameMorfoBinaria;
+import vista.MorfoGris.FrameMorfoGris;
 import vista.conversor.FrameConversor;
 import vista.filtrosLineales.FrameFiltrosLineales;
 import vista.filtrosNoLineales.FrameFiltrosNoLineales;
@@ -60,6 +62,8 @@ public class FrameAllIn extends JFrame {
         JButton botonRuido = new JButton("Ruido");
         JButton botonFiltrosLineales = new JButton("Filtros Lineales");
         JButton botonFiltrosNoLineales = new JButton("Filtros No Lineales");
+        JButton botonMorfoBinario = new JButton("Morfologia Binaria");
+        JButton botonMorfoGris = new JButton("Morfologia Grises");
         
         panelBotones.add(botonPractica1);
         panelBotones.add(botonHistograma);
@@ -70,6 +74,8 @@ public class FrameAllIn extends JFrame {
         panelBotones.add(botonRuido);
         panelBotones.add(botonFiltrosLineales);
         panelBotones.add(botonFiltrosNoLineales);
+        panelBotones.add(botonMorfoBinario);
+        panelBotones.add(botonMorfoGris);
 
         botonConversor.addActionListener(e -> new FrameConversor(imagen));
         botonFiltrosLineales.addActionListener(e -> new FrameFiltrosLineales(imagen));
@@ -80,13 +86,21 @@ public class FrameAllIn extends JFrame {
         botonPractica1.addActionListener(e -> new FramePractica1(imagen));
         botonRuido.addActionListener(e -> new FrameRuido(imagen));
         botonUmbralizacion.addActionListener(e -> new FrameUmbralizacion(imagen));
+        botonMorfoBinario.addActionListener(e -> new FrameMorfoBinaria(imagen));
+        botonMorfoGris.addActionListener(e -> new FrameMorfoGris(imagen));
 
         panelImagen= new PanelImagen(imagen);
+        JButton botonCerrar = new JButton("Cerrar programa");
+        botonCerrar.addActionListener( e-> cerrarPrograma());
         this.add(panelImagen,BorderLayout.CENTER);
         this.add(panelBotones, BorderLayout.NORTH);
+        this.add(botonCerrar,BorderLayout.SOUTH);
         this.setVisible(true);
     }
-
+    private void cerrarPrograma(){
+        System.exit(0);
+        
+    }
     private void seleccionarImagen() {
         JFileChooser fileChooser = new JFileChooser();
         int resultado = fileChooser.showOpenDialog(this);

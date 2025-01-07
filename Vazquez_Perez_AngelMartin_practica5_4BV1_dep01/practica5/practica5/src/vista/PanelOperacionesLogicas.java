@@ -9,11 +9,13 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
-import modelo.Aritmeticas;
 import modelo.ImageBufferedImage;
 import modelo.Logicas;
 
@@ -31,6 +33,7 @@ public class PanelOperacionesLogicas extends JPanel {
     private ImageBufferedImage imageBuffered;
     private JComboBox<String> comboOperacion;
     private Logicas logicas;
+    private JCheckBox checkNot;
     
     public PanelOperacionesLogicas(Image imagen1,Image imagen2){
         this.imagen1=imagen1;
@@ -40,7 +43,7 @@ public class PanelOperacionesLogicas extends JPanel {
     public void initComponents(){
         imageBuffered = new ImageBufferedImage();
         this.setLayout(new BorderLayout());
-        JPanel panelTop= new JPanel(new GridLayout(1,2));
+        JPanel panelTop= new JPanel(new GridLayout(2,2));
         panelTop.add(new Label("seleccione su operacion logica"));
         comboOperacion = new JComboBox<>();
         comboOperacion.addItem("AND");
@@ -54,14 +57,23 @@ public class PanelOperacionesLogicas extends JPanel {
         panelResultado= new PanelImagenLabel(imagen1,new Label("Imagen de Resultado"));
         panelCentro.add(panel1);
         panelCentro.add(panel2);
+        checkNot = new JCheckBox("Marcar para negar la segunda imagen");
+        panelTop.add(checkNot);
         panelCentro.add(panelResultado);
         this.add(panelTop,BorderLayout.NORTH);
         this.add(panelCentro,BorderLayout.CENTER);
         logicas= new Logicas(imagen1,imagen2);
+
         actualizarOperacion();
         comboOperacion.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
+                actualizarOperacion();
+            }
+        });
+        checkNot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 actualizarOperacion();
             }
         });
@@ -74,7 +86,11 @@ public class PanelOperacionesLogicas extends JPanel {
         }else if (operacion=="OR"){
             nuevaImagen=logicas.ORimagenes();
         }else if (operacion=="NOT"){
-            nuevaImagen=logicas.NOTimagenes();
+            if(checkNot.isSelected())
+                nuevaImagen=logicas.NOTimagenes(2);
+            else{
+                nuevaImagen=logicas.NOTimagenes(1);
+            }
         }else{
             nuevaImagen=logicas.XORimagenes();
         }

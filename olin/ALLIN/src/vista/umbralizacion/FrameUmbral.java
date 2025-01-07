@@ -7,21 +7,15 @@ package vista.umbralizacion;
 
 import vista.umbralizacion.PanelUmbral;
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
 import java.awt.Container;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  *
  * @author jhona
  */
-public class FrameUmbral extends JFrame{
-   private PanelUmbral panelUmbral;
+public final class FrameUmbral extends JFrame{
+   private final PanelUmbral panelUmbral;
    
    public FrameUmbral(PanelUmbral panelUmbral){
        this.panelUmbral=panelUmbral;

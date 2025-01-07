@@ -57,10 +57,19 @@ public class Logicas {
             for (int x=0; x<anchoMax;x++){
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
+                if (y >= alto1 || x >= ancho1) {
+                    if (y < alto2 && x < ancho2) { 
+                        nuevoGris = matrizImagen2[y][x];
+                    } else {
+                        nuevoGris = 128;
+                    }
+                }
+                else if (y >= alto2 || x >= ancho2) {
+                    if (y < alto1 && x < ancho1) {
+                        nuevoGris = matrizImagen1[y][x];
+                    } else {
+                        nuevoGris = 128;  
+                    }
                 }else{
                     nuevoGris = (matrizImagen1[y][x] & matrizImagen2[y][x]);
                 }
@@ -80,10 +89,19 @@ public class Logicas {
             for (int x=0; x<anchoMax;x++){
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
+                if (y >= alto1 || x >= ancho1) {
+                    if (y < alto2 && x < ancho2) { 
+                        nuevoGris = matrizImagen2[y][x];
+                    } else {
+                        nuevoGris = 128;
+                    }
+                }
+                else if (y >= alto2 || x >= ancho2) {
+                    if (y < alto1 && x < ancho1) {
+                        nuevoGris = matrizImagen1[y][x];
+                    } else {
+                        nuevoGris = 128;  
+                    }
                 }else{
                     nuevoGris = matrizImagen1[y][x] | matrizImagen2[y][x];
                 }
@@ -105,10 +123,19 @@ public class Logicas {
                 int max;
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
+                if (y >= alto1 || x >= ancho1) {
+                    if (y < alto2 && x < ancho2) { 
+                        nuevoGris = matrizImagen2[y][x];
+                    } else {
+                        nuevoGris = 128;
+                    }
+                }
+                else if (y >= alto2 || x >= ancho2) {
+                    if (y < alto1 && x < ancho1) {
+                        nuevoGris = matrizImagen1[y][x];
+                    } else {
+                        nuevoGris = 128;  
+                    }
                 }else{
                     nuevoGris= matrizImagen1[y][x] ^ matrizImagen2[y][x];
                 }
@@ -122,29 +149,34 @@ public class Logicas {
                 0, anchoMax));
         return nuevaImagen;
     }
-    public Image NOTimagenes(){
-        int [][] imagenInt = new int[altoMax][anchoMax];
-        for(int y=0; y<altoMax; y++) {
-            for (int x=0; x<anchoMax;x++){
-                int min;
-                int max;
+    public Image NOTimagenes(int opcion){
+        int alto,ancho;
+
+        if(opcion==1){
+            alto=alto1;
+            ancho=ancho1;
+        }else{
+            alto=alto2;
+            ancho=ancho2;
+        }
+        int [][] imagenInt = new int[alto][ancho];
+        for(int y=0; y<alto; y++) {
+            for (int x=0; x<ancho;x++){
                 Color color;
                 int nuevoGris;
-                if(y>=alto1 || x>=ancho1){
-                    nuevoGris=matrizImagen2[y][x];
-                }else if (y>=alto2 || x>=ancho2){
-                    nuevoGris=matrizImagen1[y][x];
-                }else{
+                if(opcion==1){
                     nuevoGris= ~matrizImagen1[y][x] & 0xff;
+                }else{
+                    nuevoGris= ~matrizImagen2[y][x] & 0xff;
                 }
                 color=new Color(nuevoGris,nuevoGris,nuevoGris);
                 imagenInt[y][x] = color.getRGB();
             }
         }
         JFrame padre = new JFrame();
-        Image nuevaImagen = padre.createImage(new MemoryImageSource(anchoMax,
-                altoMax, imageBuffered.convertirInt2DAInt1D(imagenInt, anchoMax, altoMax),
-                0, anchoMax));
+        Image nuevaImagen = padre.createImage(new MemoryImageSource(ancho,
+                alto, imageBuffered.convertirInt2DAInt1D(imagenInt, ancho, alto),
+                0, ancho));
         return nuevaImagen;
     }
     public void setImagenes(Image imagen1,Image imagen2){

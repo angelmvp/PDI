@@ -44,17 +44,12 @@ public class FrameFiltrosLineales extends JFrame{
     private String panelActual;
     private PanelUmbral panelUmbral;
     public FrameFiltrosLineales() {
-        super("Practica 8");        
+        super("Filtros Lineales");        
         initComponents();
-      addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                System.exit(0); 
-            }
-        });
     }
     public FrameFiltrosLineales(Image imagen){
-       this.imagen=imagen;
+       super("Filtros Lineales");
+        this.imagen=imagen;
        imageBuffered = new ImageBufferedImage();
        this.buffered=imageBuffered.getBufferedImageColor(imagen);
        initComponents();
