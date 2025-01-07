@@ -30,10 +30,17 @@ import modelo.ImageBufferedImage;
  * @author jhona
  */
 public class FrameCompleto extends JFrame{
+    private JPanel panelBotones;
+    private JPanel panelPrincipal;
+    private PanelMorfologicoGris panelMorfologicoGris;
     private PanelMorfologicoBinario panelMorfologicoBinario;
+    private PanelImagen panelImagen;
+    private BufferedImage buffered;
     private Image imagen;
+    private ImageBufferedImage imageBuffered;
+    private String panelActual;
     public FrameCompleto() {
-        super("Morfologia Binaria");        
+        super("Practica 9");        
         initComponents();
       addWindowListener(new WindowAdapter() {
             @Override
@@ -43,11 +50,16 @@ public class FrameCompleto extends JFrame{
         });
     }
     private void initComponents() {
+        imageBuffered = new ImageBufferedImage();
         seleccionarImagen();
         Container contenedor = this.getContentPane();
         contenedor.setLayout(new BorderLayout());
+        panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new CardLayout());
+        panelMorfologicoGris = new PanelMorfologicoGris(imagen);
         panelMorfologicoBinario = new PanelMorfologicoBinario(imagen);
-        contenedor.add(panelMorfologicoBinario, BorderLayout.CENTER);
+        panelPrincipal.add(panelMorfologicoBinario, "panel ruido");
+        contenedor.add(panelPrincipal, BorderLayout.CENTER);
         
         JButton botonCargar = new JButton("Seleccionar Imagen");
             botonCargar.addActionListener(new ActionListener() {
@@ -80,7 +92,21 @@ public class FrameCompleto extends JFrame{
             }
         }
     }
+//    public void crearPanelBinarizacion(){
+//        System.out.println(panelActual);
+//        if(panelActual=="pasaBajas"){
+//            System.out.println("se creo pasabajas");
+//            panelUmbral= new PanelUmbral(panelPasaBajas.getImagenFiltrada());
+//            new FrameUmbral(panelUmbral);
+//        }else if (panelActual=="pasaAltas"){
+//            System.out.println("se creo pasa altas");
+//            panelUmbral=new PanelUmbral (panelPasaAltas.getImagenFiltrada());
+//            new FrameUmbral(panelUmbral);
+//        }else{
+//            return;
+//        }
+//    }
     private void actualizarPaneles(){
-        panelMorfologicoBinario.setImagen(imagen);
+        panelMorfologicoGris.setImagen(imagen);
     }
 }

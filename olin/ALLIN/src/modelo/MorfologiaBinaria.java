@@ -8,6 +8,7 @@ package modelo;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.MemoryImageSource;
+import java.util.Arrays;
 import javax.swing.JFrame;
 
 /**
@@ -39,10 +40,10 @@ public class MorfologiaBinaria {
        
     }
     public Image aplicarDilatacion() {
-        nuevaMatriz=new int[alto][ancho];
+        nuevaMatriz= new int[alto][ancho];
         for(int y=0; y<alto;y++){
             for(int x=0;x<ancho;x++){
-              int pixel = dilatarPixel(x,y);
+              int pixel = dilatarPixel(x,y);;
               nuevaMatriz[y][x]= new Color(pixel,pixel,pixel).getRGB();
             }
         }
@@ -52,7 +53,7 @@ public class MorfologiaBinaria {
     public int dilatarPixel(int x,int y){
         int[] ventana=ES.obtenerVentanaES(x,y);
         for(int i=0;i<ventana.length;i++){
-            if (ventana[i]>200){
+            if (ventana[i]==255){
                 return 255;
             }
         }
@@ -63,7 +64,7 @@ public class MorfologiaBinaria {
         nuevaMatriz=new int[alto][ancho];
         for(int y=0; y<alto;y++){
             for(int x=0;x<ancho;x++){
-              int pixel = erosionarPixel(x,y);
+              int pixel = erosionarPixel(x,y);;
               nuevaMatriz[y][x]= new Color(pixel,pixel,pixel).getRGB();
             }
         }
@@ -94,22 +95,24 @@ public class MorfologiaBinaria {
     }
     
 
+   
+
+    private int validar(int n){
+        return Math.min(255, Math.max(0, n));
+    }
     private Image generarImagenDesdeMatriz(int[][] matriz) {
         JFrame padre = new JFrame();
         return padre.createImage(new MemoryImageSource(ancho, alto, 
                 imageBuffered.convertirInt2DAInt1D(matriz, ancho, alto), 0, ancho));
     }
-    public void setTipoES(String tipoES){
-        this.tipoES=tipoES;
-        ES.setTipoES(tipoES);
+    public void setTipoES(String tipoMascara){
+        this.tipoES=tipoMascara;
     }
     public void setTamES(int tam){
         this.tamES=tam;
-        ES.setTamES(tam);
     }
     public void setMatrizImagen(int[][] imagenInt){
         this.imagenInt=imagenInt;
-        ES.setMatrizImagen(imagenInt);
         initComponents();
     }
 }
