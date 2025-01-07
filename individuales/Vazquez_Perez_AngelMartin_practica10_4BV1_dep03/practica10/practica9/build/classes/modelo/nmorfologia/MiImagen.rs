@@ -1,0 +1,2 @@
+temporal.morfologia.MiImagen$TipoImagen
+temporal.morfologia.MiImagen
